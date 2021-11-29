@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+  </head>
+  <body
+    x-data="{
+    fin: 'Minä rakastan Alpinetta.',
+    eng: 'I love Alpine.',
+    get showFin() {
+      var hints = this.fin.split(' ').join('aaarrr ')
+      return hints
+    },
+    get finBlanks() {
+      return this.fin.split(' ').map(word => '_____')
+    },
+    get finHints() {
+      return this.fin.split(' ').map(word => word[0] + '____')
+    },
+    get finWords() {
+      return this.fin.split(' ').map(word => word)
+    },
+    blanksAreShown: true,
+    hintsAreShown: false,
+    wordsAreShown: false,
+  }"
+  >
+    <p x-text="showFin"></p>
+    <p x-text="eng"></p>
+    <div x-data="{ count: 0 }">
+      <button x-on:click="count++">Increment</button>
+      <span x-text="count"></span>
+    </div>
+    <div x-show="blanksAreShown">
+      <template x-for="blank in finBlanks">
+        <span>
+          <span x-text="blank"></span>
+        </span>
+      </template>
+    </div>
+    <div x-show="hintsAreShown">
+      <template x-for="hint in finHints">
+        <span>
+          <span x-text="hint"></span>
+        </span>
+      </template>
+    </div>
+    <div x-show="wordsAreShown">
+      <template x-for="word in finWords">
+        <span>
+          <span x-text="word"></span>
+        </span>
+      </template>
+    </div>
+    <div>
+      <button @click="blanksAreShown = true; hintsAreShown = false; wordsAreShown = false;">Blanks</button>
+      <button @click="blanksAreShown = false; hintsAreShown = true; wordsAreShown = false;">Hints</button>
+      <button @click="blanksAreShown = false; hintsAreShown = false; wordsAreShown = true;">Words</button>
+    </div>
+  </body>
+</html>
