@@ -4,60 +4,69 @@
       defer
       src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
     ></script>
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
   </head>
   <body
     x-data="{
-    fin: 'Minä rakastan Alpinetta.',
-    eng: 'I love Alpine.',
-    get showFin() {
-      var hints = this.fin.split(' ').join('aaarrr ')
-      return hints
-    },
-    get finBlanks() {
-      return this.fin.split(' ').map(word => '_____')
-    },
-    get finHints() {
-      return this.fin.split(' ').map(word => word[0] + '____')
-    },
-    get finWords() {
-      return this.fin.split(' ').map(word => word)
-    },
-    blanksAreShown: true,
-    hintsAreShown: false,
-    wordsAreShown: false,
-  }"
+      finSentence: 'Minä rakastan Alpinetta.',
+      eng: 'I love Alpine.',
+      get blanks() {
+        return this.finSentence.split(' ').map(word => '_____')
+      },
+      get words() {
+        return this.finSentence.split(' ')
+      },
+      wordStatuses: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      blanksOn: true,
+      hintsOn: false,
+      get words2() {
+        return this.words.map((word, index) => {
+          return {
+            text: word,
+            id: index+1,
+          }
+        })
+      },
+    }"
+    class="mx-6 my-16 flex justify-center text-3xl text-center"
   >
-    <p x-text="showFin"></p>
-    <p x-text="eng"></p>
-    <div x-data="{ count: 0 }">
-      <button x-on:click="count++">Increment</button>
-      <span x-text="count"></span>
-    </div>
-    <div x-show="blanksAreShown">
-      <template x-for="blank in finBlanks">
-        <span>
-          <span x-text="blank"></span>
-        </span>
-      </template>
-    </div>
-    <div x-show="hintsAreShown">
-      <template x-for="hint in finHints">
-        <span>
-          <span x-text="hint"></span>
-        </span>
-      </template>
-    </div>
-    <div x-show="wordsAreShown">
-      <template x-for="word in finWords">
-        <span>
-          <span x-text="word"></span>
-        </span>
-      </template>
-    </div>
     <div>
-      <button @click="blanksAreShown = true; hintsAreShown = false; wordsAreShown = false;">Blanks</button>
-      <button @click="blanksAreShown = false; hintsAreShown = true; wordsAreShown = false;">Hints</button>
-      <button @click="blanksAreShown = false; hintsAreShown = false; wordsAreShown = true;">Words</button>
+      <p x-text="eng" class="mb-6"></p>
+      <div>
+        <template x-for="(word, index) in words">
+          <span @click="wordStatuses[index] = !wordStatuses[index]">
+            <span
+              x-show="!wordStatuses[index] && blanksOn"
+              x-text="blanks[index]"
+            ></span>
+            <span
+              x-show="!wordStatuses[index] && hintsOn"
+              x-text="word[0] + '____'"
+            ></span>
+            <span
+              x-show="wordStatuses[index] && (blanksOn || hintsOn)"
+              x-text="word"
+            ></span>
+          </span>
+        </template>
+      </div>
+      <div class="mt-16 text-lg">
+        <button
+          class="px-4 py-1 mx-2 border-2"
+          @click="blanksOn = true; hintsOn = false;"
+        >
+          Blanks
+        </button>
+        <button
+          class="px-4 py-1 mx-2 border-2"
+          @click="blanksOn = false; hintsOn = true;"
+        >
+          Hints
+        </button>
+      </div>
     </div>
   </body>
 </html>
