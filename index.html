@@ -43,6 +43,27 @@
         } else if (change == -1 && this.sentenceI > 0) {
           this.sentenceI--;
         }
+        this.resetWordStatuses();
+      },
+      resetWordStatuses: function() {
+        for (let i = 0; i < this.words.length; i++) {
+          this.wordStatuses[i] = false;
+        }
+      },
+      showWords: function() {
+        for (let i = 0; i < this.words.length; i++) {
+          this.wordStatuses[i] = true;
+        }
+      },
+      showBlanks: function() {
+        this.blanksOn = true;
+        this.hintsOn = false;
+        this.resetWordStatuses();
+      },
+      showHints: function() {
+        this.blanksOn = false;
+        this.hintsOn = true;
+        this.resetWordStatuses();
       },
     }"
     class="mx-6 my-16 flex justify-center text-3xl text-center"
@@ -70,15 +91,21 @@
       <div class="mt-16 text-lg">
         <button
           class="px-4 py-1 mx-2 border-2"
-          @click="blanksOn = true; hintsOn = false;"
+          @click="showBlanks();"
         >
           Blanks
         </button>
         <button
           class="px-4 py-1 mx-2 border-2"
-          @click="blanksOn = false; hintsOn = true;"
+          @click="showHints();"
         >
           Hints
+        </button>
+        <button
+          class="px-4 py-1 mx-2 border-2"
+          @click="showWords();"
+        >
+          Words
         </button>
       </div>
       <div class="m-8 text-lg">
