@@ -11,32 +11,72 @@
   </head>
   <body
     x-data="{
-      sentenceI: 0,
+      init: function() {
+        this.setUpWordStatuses();
+      },
+
       finSentences: [
         `Diego on muuttanut opiskelija-asuntoon Junatielle.`,
         `Asunto on soluasunto, jossa asuu Diegon lisäksi neljä muuta opiskelijaa.`,
+        `Diego ihmettelee, miksi keittiön kaapissa on neljä erilaista jäteastiaa.`,
+        `Moi Siiri, voisiks sä autaa mua?`,
+        `Mä en tiedä, mihin roskikseen nää banaaninkuoret pitää laittaa.`,
+        `Joo, totta kai.`,
+        `Banaaninkuoret on biojätettä.`,
+        `Toi pieni vihreä astia on sitä varten.`,
+        `Ahaa, okei. No mitä nää muut astiat on?`,
+        `Tää iso astia on pahvipakkauksille ja toi oranssi astia on energiajätteelle.`,
+        `Loput roskat on sekajätettä.`,
+        `Ne voi laittaa tähän.`,
+        `Mitä sekajäte oikein on?`,
+        `No kaikki sellainen jäte, jota ei voi kierrättää, on sekajätettä.`,
+        `Se päätyy suoraan kaatopaikalle.`,
+        `Aijaa.`,
+        `Tänne toiseen kaappiin me kerätään kaikki pullot ja lasipurkit.`,
+        `Pullot me palautetaan kauppaan, koska niistä saa pantin.`,
+        `Lasipurkit me viedään lasinkeräykseen.`,
+        `Tuolla pihalla on iso jätekatos.`,
       ],
+
       engSentences: [
         `Diego has moved into a student apartment on Junatie.`,
         `The apartment is a cell apartment where four other students live in addition to Diego.`,
+        `Diego is wondering why there are four different bins in the kitchen cabinet.`,
+        `Hi Siiri, can you help me?`,
+        `I don't know which bin to put the banana peels in.`,
+        `Yes of course.`,
+        `Banana peels are biowaste.`,
+        `That little green container is for that.`,
+        `Ahaa, okay. Well what are these other dishes?`,
+        `This big container is for cardboard packaging and that orange container is for energy waste.`,
+        `The rest of the rubbish is mixed waste.`,
+        `They can be put here.`,
+        `What exactly is mixed waste?`,
+        `Well, all the kind of waste that can’t be recycled is mixed waste.`,
+        `It ends up in landfill.`,
+        `Oh right.`,
+        `We collect all the bottles and glass jars in this other cupboard.`,
+        `We return the bottles to the shop, because they get a deposit.`,
+        `We take the glass jars to the glass recycling.`,
+        `There is a big trash container in that yard.`,
       ],
+
       get blanks() {
         return this.finSentences[this.sentenceI].split(' ').map(word => '_____')
       },
+
       get words() {
         return this.finSentences[this.sentenceI].split(' ')
       },
-      wordStatuses: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      blanksOn: true,
-      hintsOn: false,
-      get words2() {
-        return this.words.map((word, index) => {
-          return {
-            text: word,
-            id: index+1,
-          }
-        })
+
+      setUpWordStatuses: function() {
+        this.wordStatuses = this.words.map(w => false);
       },
+
+      sentenceI: 0,
+      wordStatuses: [],
+      hintsAreShown: false,
+
       changeSentence: function(change) {
         if (change == 1 && this.sentenceI < this.finSentences.length - 1) {
           this.sentenceI++;
@@ -45,25 +85,34 @@
         }
         this.resetWordStatuses();
       },
+
       resetWordStatuses: function() {
+        this.wordStatuses = [];
         for (let i = 0; i < this.words.length; i++) {
           this.wordStatuses[i] = false;
         }
       },
+
+      get sentenceIsShown() {
+        return this.wordStatuses.every(status => status === true);
+      },
+
+      get sentenceIsReset() {
+        return this.wordStatuses.every(status => status === false);
+      },
+
       showWords: function() {
         for (let i = 0; i < this.words.length; i++) {
           this.wordStatuses[i] = true;
         }
       },
-      showBlanks: function() {
-        this.blanksOn = true;
-        this.hintsOn = false;
+
+      resetSentence: function() {
         this.resetWordStatuses();
       },
-      showHints: function() {
-        this.blanksOn = false;
-        this.hintsOn = true;
-        this.resetWordStatuses();
+
+      toggleHints: function() {
+        this.hintsAreShown = !this.hintsAreShown;
       },
     }"
     class="mx-6 my-16 flex justify-center text-3xl text-center"
@@ -74,35 +123,34 @@
         <template x-for="(word, index) in words">
           <span @click="wordStatuses[index] = !wordStatuses[index]">
             <span
-              x-show="!wordStatuses[index] && blanksOn"
+              x-show="!wordStatuses[index] && !hintsAreShown"
               x-text="blanks[index]"
             ></span>
             <span
-              x-show="!wordStatuses[index] && hintsOn"
+              x-show="!wordStatuses[index] && hintsAreShown"
               x-text="word[0] + '____'"
             ></span>
-            <span
-              x-show="wordStatuses[index] && (blanksOn || hintsOn)"
-              x-text="word"
-            ></span>
+            <span x-show="wordStatuses[index]" x-text="word"></span>
           </span>
         </template>
       </div>
       <div class="mt-16 text-lg">
         <button
-          class="px-4 py-1 mx-2 border-2"
-          @click="showBlanks();"
+          :class="sentenceIsReset ? 'pointer-events-none opacity-25' : ''"
+          class="px-4 py-1 mx-2 border-2 rounded-md"
+          @click="resetSentence();"
         >
-          Blanks
+          Reset
         </button>
         <button
-          class="px-4 py-1 mx-2 border-2"
-          @click="showHints();"
-        >
-          Hints
-        </button>
+          x-text="hintsAreShown ? 'Hints off' : 'Hints on'"
+          :class="sentenceIsShown ? 'pointer-events-none opacity-25' : ''"
+          class="px-4 py-1 mx-2 border-2 rounded-md"
+          @click="toggleHints();"
+        ></button>
         <button
-          class="px-4 py-1 mx-2 border-2"
+          :class="sentenceIsShown ? 'pointer-events-none opacity-25' : ''"
+          class="px-4 py-1 mx-2 border-2 rounded-md"
           @click="showWords();"
         >
           Words
@@ -110,17 +158,38 @@
       </div>
       <div class="m-8 text-lg">
         <button
-          class="px-4 py-1 mx-2 border-2"
-          @click="changeSentence(-1);"
+          :class="sentenceI === 0 ? 'pointer-events-none opacity-25' : ''"
+          class="px-4 py-1 mx-2 border-2 rounded-md"
+          @click="sentenceI = 0; resetSentence();"
         >
-          Last sentence
+          <<--
         </button>
         <button
-          class="px-4 py-1 mx-2 border-2"
+          :class="sentenceI === 0 ? 'pointer-events-none opacity-25' : ''"
+          class="px-4 py-1 mx-2 border-2 rounded-md"
+          @click="changeSentence(-1);"
+        >
+          <-
+        </button>
+        <button
+          :class="sentenceI === finSentences.length - 1 ? 'pointer-events-none opacity-25' : ''"
+          class="px-4 py-1 mx-2 border-2 rounded-md"
           @click="changeSentence(1);"
         >
-          Next sentence
+          ->
         </button>
+        <button
+          :class="sentenceI === finSentences.length - 1 ? 'pointer-events-none opacity-25' : ''"
+          class="px-4 py-1 mx-2 border-2 rounded-md"
+          @click="sentenceI = finSentences.length - 1; resetSentence();"
+        >
+          -->>
+        </button>
+      </div>
+      <div class="text-sm">
+        <span x-text="sentenceI + 1"></span>
+        <span>/</span>
+        <span x-text="finSentences.length"></span>
       </div>
     </div>
   </body>
