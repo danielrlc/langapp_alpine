@@ -62,11 +62,17 @@
       ],
 
       get blanks() {
-        return this.finSentences[this.sentenceI].split(' ').map(word => '_____')
+        return this.finSentences[this.sentenceI].split(' ').map(word => word.split('').map(letter => '_').join(''));
+      },
+
+      get hints() {
+        return this.finSentences[this.sentenceI].split(' ')
+          .map(word => word.split('')
+          .map((letter, i) => i == 0 ? letter : '_').join(''));
       },
 
       get words() {
-        return this.finSentences[this.sentenceI].split(' ')
+        return this.finSentences[this.sentenceI].split(' ');
       },
 
       setUpWordStatuses: function() {
@@ -118,8 +124,8 @@
     class="mx-6 my-16 flex justify-center text-3xl text-center"
   >
     <div>
-      <p x-text="engSentences[sentenceI]" class="mb-6"></p>
-      <div>
+      <p x-text="engSentences[sentenceI]" class="mb-6 font-mono"></p>
+      <div class="font-mono">
         <template x-for="(word, index) in words">
           <span @click="wordStatuses[index] = !wordStatuses[index]">
             <span
@@ -128,7 +134,7 @@
             ></span>
             <span
               x-show="!wordStatuses[index] && hintsAreShown"
-              x-text="word[0] + '____'"
+              x-text="hints[index]"
             ></span>
             <span x-show="wordStatuses[index]" x-text="word"></span>
           </span>
@@ -173,7 +179,7 @@
         </button>
         <button
           :class="sentenceI === finSentences.length - 1 ? 'pointer-events-none opacity-25' : ''"
-          class="px-4 py-1 mx-2 border-2 rounded-md"
+          class="px-4 py-1 mx-2 rounded-md bg-green-300 hover:bg-green-400"
           @click="changeSentence(1);"
         >
           ->
