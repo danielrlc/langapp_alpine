@@ -100,8 +100,8 @@
       },
 
       get progress() {
-        return (this.sentenceStatusRegister
-          .filter(status => status).length / this.sentenceStatusRegister.length) * 100
+        return Math.round((this.sentenceStatusRegister
+          .filter(status => status).length / this.sentenceStatusRegister.length) * 100)
       },
 
       get sentenceIsShown() {
@@ -220,26 +220,10 @@
       </div>
     </div>
     <div>
-      <div class="flex items-center">
+      <div class="flex items-center justify-center mb-6">
         <span>Progress: </span>
         <span x-text="progress" class="ml-2 text-3xl"></span>
         <span class="ml-1 text-2xl">%</span>
-        <span
-          :class="sentenceStatusRegister[sentenceI] ? 'bg-green-300' : 'bg-red-300'"
-          class="
-            flex
-            items-center
-            justify-center
-            w-12
-            h-12
-            mb-4
-            mx-auto
-            rounded-lg
-            text-2xl
-          "
-        >
-          <span x-text="sentenceI+1"></span>
-        </span>
       </div>
       <template x-for="(sentenceStatus, i) in sentenceStatusRegister">
         <span @click="sentenceI = i" class="px-1 leading-3">
