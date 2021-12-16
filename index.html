@@ -2,10 +2,10 @@
   <head>
     <script
       defer
-      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+      src="alpine.js"
     ></script>
     <link
-      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      href="tailwind.css"
       rel="stylesheet"
     />
   </head>
@@ -19,7 +19,7 @@
         `Diego on muuttanut opiskelija-asuntoon Junatielle.`,
         `Asunto on soluasunto, jossa asuu Diegon lisäksi neljä muuta opiskelijaa.`,
         `Diego ihmettelee, miksi keittiön kaapissa on neljä erilaista jäteastiaa.`,
-        `Moi Siiri, voisiks sä autaa mua?`,
+        `Moi Siiri, voisiks sä auttaa mua?`,
         `Mä en tiedä, mihin roskikseen nää banaaninkuoret pitää laittaa.`,
         `Joo, totta kai.`,
         `Banaaninkuoret on biojätettä.`,
@@ -62,7 +62,9 @@
       ],
 
       get blanks() {
-        return this.finSentences[this.sentenceI].split(' ').map(word => word.split('').map(letter => '_').join(''));
+        return this.finSentences[this.sentenceI].split(' ')
+          .map(word => word.split('')
+          .map(letter => '_').join(''));
       },
 
       get hints() {
@@ -76,7 +78,11 @@
       },
 
       setUpWordStatuses: function() {
-        this.wordStatuses = this.words.map(w => false);
+        this.wordStatuses = this.finSentences
+          .map(sentence => sentence
+            .split(' ')
+            .map(word => false)
+          );
       },
 
       sentenceI: 0,
@@ -84,33 +90,27 @@
       hintsAreShown: false,
 
       changeSentence: function(change) {
-        if (change == 1 && this.sentenceI < this.finSentences.length - 1) {
+        if (change == 'next' && this.sentenceI < this.finSentences.length - 1) {
           this.sentenceI++;
-        } else if (change == -1 && this.sentenceI > 0) {
+        } else if (change == 'previous' && this.sentenceI > 0) {
           this.sentenceI--;
         }
-        this.resetWordStatuses();
       },
 
       resetWordStatuses: function() {
-        this.wordStatuses = [];
-        for (let i = 0; i < this.words.length; i++) {
-          this.wordStatuses[i] = false;
-        }
+        this.wordStatuses[this.sentenceI] = this.words.map(word => false);
       },
 
       get sentenceIsShown() {
-        return this.wordStatuses.every(status => status === true);
+        return this.wordStatuses[this.sentenceI].every(status => status === true);
       },
 
       get sentenceIsReset() {
-        return this.wordStatuses.every(status => status === false);
+        return this.wordStatuses[this.sentenceI].every(status => status === false);
       },
 
       showWords: function() {
-        for (let i = 0; i < this.words.length; i++) {
-          this.wordStatuses[i] = true;
-        }
+        this.wordStatuses[this.sentenceI] = this.words.map(word => true)
       },
 
       resetSentence: function() {
@@ -123,24 +123,31 @@
     }"
     class="mx-6 my-16 flex justify-center text-3xl text-center"
   >
+    <!-- Sentence in English and Finnish -->
     <div>
+      <!-- English sentence -->
       <p x-text="engSentences[sentenceI]" class="mb-6 font-mono"></p>
+
+      <!-- Finnish sentence -->
       <div class="font-mono">
         <template x-for="(word, index) in words">
-          <span @click="wordStatuses[index] = !wordStatuses[index]">
+          <span @click="wordStatuses[sentenceI][index] = !wordStatuses[sentenceI][index]">
             <span
-              x-show="!wordStatuses[index] && !hintsAreShown"
+              x-show="!wordStatuses[sentenceI][index] && !hintsAreShown"
               x-text="blanks[index]"
             ></span>
             <span
-              x-show="!wordStatuses[index] && hintsAreShown"
+              x-show="!wordStatuses[sentenceI][index] && hintsAreShown"
               x-text="hints[index]"
             ></span>
-            <span x-show="wordStatuses[index]" x-text="word"></span>
+            <span x-show="wordStatuses[sentenceI][index]" x-text="word"></span>
           </span>
         </template>
       </div>
+
+      <!-- Sentence buttons -->
       <div class="mt-16 text-lg">
+        <!-- Reset button -->
         <button
           :class="sentenceIsReset ? 'pointer-events-none opacity-25' : ''"
           class="px-4 py-1 mx-2 border-2 rounded-md"
@@ -148,50 +155,65 @@
         >
           Reset
         </button>
+
+        <!-- Hints button -->
         <button
           x-text="hintsAreShown ? 'Hints off' : 'Hints on'"
           :class="sentenceIsShown ? 'pointer-events-none opacity-25' : ''"
           class="px-4 py-1 mx-2 border-2 rounded-md"
           @click="toggleHints();"
         ></button>
+
+        <!-- Show all button -->
         <button
           :class="sentenceIsShown ? 'pointer-events-none opacity-25' : ''"
           class="px-4 py-1 mx-2 border-2 rounded-md"
           @click="showWords();"
         >
-          Words
+          Show all
         </button>
       </div>
+
+      <!-- Navigate sentences buttons -->
       <div class="m-8 text-lg">
+        <!-- First sentence button -->
         <button
           :class="sentenceI === 0 ? 'pointer-events-none opacity-25' : ''"
           class="px-4 py-1 mx-2 border-2 rounded-md"
-          @click="sentenceI = 0; resetSentence();"
+          @click="sentenceI = 0;"
         >
           <<--
         </button>
+
+        <!-- Previous sentence button -->
         <button
           :class="sentenceI === 0 ? 'pointer-events-none opacity-25' : ''"
           class="px-4 py-1 mx-2 border-2 rounded-md"
-          @click="changeSentence(-1);"
+          @click="changeSentence('previous');"
         >
           <-
         </button>
+
+        <!-- Next sentence button  -->
         <button
           :class="sentenceI === finSentences.length - 1 ? 'pointer-events-none opacity-25' : ''"
           class="px-4 py-1 mx-2 rounded-md bg-green-300 hover:bg-green-400"
-          @click="changeSentence(1);"
+          @click="changeSentence('next');"
         >
           ->
         </button>
+
+        <!-- Last sentence button -->
         <button
           :class="sentenceI === finSentences.length - 1 ? 'pointer-events-none opacity-25' : ''"
           class="px-4 py-1 mx-2 border-2 rounded-md"
-          @click="sentenceI = finSentences.length - 1; resetSentence();"
+          @click="sentenceI = finSentences.length - 1;"
         >
           -->>
         </button>
       </div>
+
+      <!-- Navigation info -->
       <div class="text-sm">
         <span x-text="sentenceI + 1"></span>
         <span>/</span>
