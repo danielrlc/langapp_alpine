@@ -1,18 +1,12 @@
 <html>
   <head>
-    <script
-      defer
-      src="alpine.js"
-    ></script>
-    <link
-      href="tailwind.css"
-      rel="stylesheet"
-    />
+    <script defer src="alpine.js"></script>
+    <link href="tailwind.css" rel="stylesheet" />
   </head>
   <body
     x-data="{
       init: function() {
-        this.setUpWordStatuses();
+        this.setUpWordStatusRegister()
       },
 
       finSentences: [
@@ -62,163 +56,217 @@
       ],
 
       get blanks() {
-        return this.finSentences[this.sentenceI].split(' ')
-          .map(word => word.split('')
-          .map(letter => '_').join(''));
+        return this.words.map(word => '_____')
       },
 
       get hints() {
         return this.finSentences[this.sentenceI].split(' ')
           .map(word => word.split('')
-          .map((letter, i) => i == 0 ? letter : '_').join(''));
+          .map((letter, i) => i == 0 ? letter : '_').join(''))
       },
 
       get words() {
-        return this.finSentences[this.sentenceI].split(' ');
+        return this.finSentences[this.sentenceI].split(' ')
       },
 
-      setUpWordStatuses: function() {
-        this.wordStatuses = this.finSentences
+      setUpWordStatusRegister: function() {
+        this.wordStatusRegister = this.finSentences
           .map(sentence => sentence
             .split(' ')
             .map(word => false)
-          );
+          )
       },
 
       sentenceI: 0,
-      wordStatuses: [],
+      wordStatusRegister: [],
       hintsAreShown: false,
 
       changeSentence: function(change) {
         if (change == 'next' && this.sentenceI < this.finSentences.length - 1) {
-          this.sentenceI++;
+          this.sentenceI++
         } else if (change == 'previous' && this.sentenceI > 0) {
-          this.sentenceI--;
+          this.sentenceI--
         }
       },
 
-      resetWordStatuses: function() {
-        this.wordStatuses[this.sentenceI] = this.words.map(word => false);
+      resetWordStatusRegister: function() {
+        this.wordStatusRegister[this.sentenceI] = this.words.map(word => false)
+      },
+
+      get sentenceStatusRegister() {
+        return this.wordStatusRegister
+          .map(sentenceStatusRegister => sentenceStatusRegister
+          .every(status => status === true))
+      },
+
+      get progress() {
+        return (this.sentenceStatusRegister
+          .filter(status => status).length / this.sentenceStatusRegister.length) * 100
       },
 
       get sentenceIsShown() {
-        return this.wordStatuses[this.sentenceI].every(status => status === true);
+        return this.wordStatusRegister[this.sentenceI].every(status => status === true)
       },
 
       get sentenceIsReset() {
-        return this.wordStatuses[this.sentenceI].every(status => status === false);
+        return this.wordStatusRegister[this.sentenceI].every(status => status === false)
       },
 
       showWords: function() {
-        this.wordStatuses[this.sentenceI] = this.words.map(word => true)
+        this.wordStatusRegister[this.sentenceI] = this.words.map(word => true)
       },
 
       resetSentence: function() {
-        this.resetWordStatuses();
+        this.resetWordStatusRegister()
       },
 
       toggleHints: function() {
-        this.hintsAreShown = !this.hintsAreShown;
+        this.hintsAreShown = !this.hintsAreShown
       },
     }"
-    class="mx-6 my-16 flex justify-center text-3xl text-center"
+    class="mx-6 my-16 grid gap-32"
+    style="grid-template-columns: 1fr 400px"
   >
-    <!-- Sentence in English and Finnish -->
+    <div class="text-center">
+      <!-- Sentence in English and Finnish -->
+      <div class="text-3xl">
+        <!-- English sentence -->
+        <p
+          x-text="engSentences[sentenceI]"
+          class="mb-8 font-mono leading-normal"
+        ></p>
+        <hr class="mb-8" />
+
+        <!-- Finnish sentence -->
+        <div class="font-mono leading-loose">
+          <template x-for="(word, i) in words">
+            <span
+              @click="wordStatusRegister[sentenceI][i] = !wordStatusRegister[sentenceI][i]"
+            >
+              <span
+                x-show="!wordStatusRegister[sentenceI][i] && !hintsAreShown"
+                x-text="blanks[i]"
+                class="bg-red-100 cursor-pointer rounded text-gray-600 py-1"
+              ></span>
+              <span
+                x-show="!wordStatusRegister[sentenceI][i] && hintsAreShown"
+                x-text="hints[i]"
+                class="bg-red-100 cursor-pointer rounded text-gray-600 py-1"
+              ></span>
+              <span
+                x-show="wordStatusRegister[sentenceI][i]"
+                x-text="word"
+                class="py-1"
+              ></span>
+            </span>
+          </template>
+        </div>
+
+        <!-- Sentence buttons -->
+        <div class="mt-16 text-lg">
+          <!-- Reset button -->
+          <button
+            :class="sentenceIsReset ? 'pointer-events-none opacity-25' : ''"
+            class="px-4 py-1 mx-2 border-2 rounded-md"
+            @click="resetSentence()"
+          >
+            Reset
+          </button>
+
+          <!-- Hints button -->
+          <button
+            x-text="hintsAreShown ? 'Hide hints' : 'Show hints'"
+            :class="sentenceIsShown ? 'pointer-events-none opacity-25' : ''"
+            class="px-4 py-1 mx-2 border-2 rounded-md"
+            @click="toggleHints()"
+          ></button>
+
+          <!-- Show all button -->
+          <button
+            :class="sentenceIsShown ? 'pointer-events-none opacity-25' : ''"
+            class="px-4 py-1 mx-2 border-2 rounded-md"
+            @click="showWords()"
+          >
+            Show all
+          </button>
+        </div>
+
+        <!-- Navigate sentences buttons -->
+        <div class="m-8 text-lg">
+          <!-- Previous sentence button -->
+          <button
+            :class="sentenceI === 0 ? 'pointer-events-none opacity-25' : ''"
+            class="px-4 py-1 mx-2 border-2 rounded-md"
+            @click="changeSentence('previous')"
+          >
+            <-
+          </button>
+
+          <!-- Next sentence button  -->
+          <button
+            :class="
+              sentenceI === finSentences.length - 1
+                ? 'pointer-events-none opacity-25 border-2'
+                : sentenceIsShown
+                ? 'bg-green-300'
+                : 'border-2'
+            "
+            class="px-4 py-1 mx-2 rounded-md"
+            @click="changeSentence('next')"
+          >
+            ->
+          </button>
+        </div>
+      </div>
+    </div>
     <div>
-      <!-- English sentence -->
-      <p x-text="engSentences[sentenceI]" class="mb-6 font-mono"></p>
-
-      <!-- Finnish sentence -->
-      <div class="font-mono">
-        <template x-for="(word, index) in words">
-          <span @click="wordStatuses[sentenceI][index] = !wordStatuses[sentenceI][index]">
-            <span
-              x-show="!wordStatuses[sentenceI][index] && !hintsAreShown"
-              x-text="blanks[index]"
-            ></span>
-            <span
-              x-show="!wordStatuses[sentenceI][index] && hintsAreShown"
-              x-text="hints[index]"
-            ></span>
-            <span x-show="wordStatuses[sentenceI][index]" x-text="word"></span>
-          </span>
-        </template>
+      <div class="flex items-center">
+        <span>Progress: </span>
+        <span x-text="progress" class="ml-2 text-3xl"></span>
+        <span class="ml-1 text-2xl">%</span>
+        <span
+          :class="sentenceStatusRegister[sentenceI] ? 'bg-green-300' : 'bg-red-300'"
+          class="
+            flex
+            items-center
+            justify-center
+            w-12
+            h-12
+            mb-4
+            mx-auto
+            rounded-lg
+            text-2xl
+          "
+        >
+          <span x-text="sentenceI+1"></span>
+        </span>
       </div>
-
-      <!-- Sentence buttons -->
-      <div class="mt-16 text-lg">
-        <!-- Reset button -->
-        <button
-          :class="sentenceIsReset ? 'pointer-events-none opacity-25' : ''"
-          class="px-4 py-1 mx-2 border-2 rounded-md"
-          @click="resetSentence();"
-        >
-          Reset
-        </button>
-
-        <!-- Hints button -->
-        <button
-          x-text="hintsAreShown ? 'Hints off' : 'Hints on'"
-          :class="sentenceIsShown ? 'pointer-events-none opacity-25' : ''"
-          class="px-4 py-1 mx-2 border-2 rounded-md"
-          @click="toggleHints();"
-        ></button>
-
-        <!-- Show all button -->
-        <button
-          :class="sentenceIsShown ? 'pointer-events-none opacity-25' : ''"
-          class="px-4 py-1 mx-2 border-2 rounded-md"
-          @click="showWords();"
-        >
-          Show all
-        </button>
-      </div>
-
-      <!-- Navigate sentences buttons -->
-      <div class="m-8 text-lg">
-        <!-- First sentence button -->
-        <button
-          :class="sentenceI === 0 ? 'pointer-events-none opacity-25' : ''"
-          class="px-4 py-1 mx-2 border-2 rounded-md"
-          @click="sentenceI = 0;"
-        >
-          <<--
-        </button>
-
-        <!-- Previous sentence button -->
-        <button
-          :class="sentenceI === 0 ? 'pointer-events-none opacity-25' : ''"
-          class="px-4 py-1 mx-2 border-2 rounded-md"
-          @click="changeSentence('previous');"
-        >
-          <-
-        </button>
-
-        <!-- Next sentence button  -->
-        <button
-          :class="sentenceI === finSentences.length - 1 ? 'pointer-events-none opacity-25' : ''"
-          class="px-4 py-1 mx-2 rounded-md bg-green-300 hover:bg-green-400"
-          @click="changeSentence('next');"
-        >
-          ->
-        </button>
-
-        <!-- Last sentence button -->
-        <button
-          :class="sentenceI === finSentences.length - 1 ? 'pointer-events-none opacity-25' : ''"
-          class="px-4 py-1 mx-2 border-2 rounded-md"
-          @click="sentenceI = finSentences.length - 1;"
-        >
-          -->>
-        </button>
-      </div>
-
-      <!-- Navigation info -->
-      <div class="text-sm">
-        <span x-text="sentenceI + 1"></span>
-        <span>/</span>
-        <span x-text="finSentences.length"></span>
-      </div>
+      <template x-for="(sentenceStatus, i) in sentenceStatusRegister">
+        <span @click="sentenceI = i" class="px-1 leading-3">
+          <br x-show="i % 10 == 0" />
+          <span
+            x-text="i+1"
+            class="
+              w-7
+              py-1
+              inline-block
+              text-center
+              rounded
+              text-sm
+              cursor-pointer
+            "
+            :class="
+              sentenceStatus && i === sentenceI
+                ? 'bg-green-300 font-bold'
+                : sentenceStatus
+                ? 'bg-green-200 hover:bg-green-300'
+                : i === sentenceI
+                ? 'bg-red-300 font-bold'
+                : 'bg-red-200 hover:bg-red-300'
+            "
+          ></span>
+        </span>
+      </template>
     </div>
   </body>
 </html>
