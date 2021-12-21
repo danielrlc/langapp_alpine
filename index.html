@@ -208,112 +208,113 @@
       },
     }"
   >
-    <h1 class="text-2xl text-center py-3 bg-blue-200">Langapp</h1>
+    <!-- The height is >100% to allow for a tiny scroll down on mobile, -->
+    <!-- which removes the space-wasting top and bottom bars. -->
     <div
-      class="mx-8 xl:mx-20 my-12 xl:my-20 grid gap-16 xl:gap-32"
-      style="grid-template-columns: 1fr 300px"
+      class="grid gap-8 lg:gap-16 pb-4 lg:pb-8"
+      style="grid-template-rows: auto 1fr auto; height: 100.2%"
     >
-      <div>
-        <!-- Sentence in English and Finnish -->
-        <div class="text-3xl">
-          <!-- English sentence -->
-          <p
-            x-text="engSentences[sentenceI]"
-            class="mb-8 font-mono leading-normal"
-          ></p>
-          <hr class="mb-8" />
+      <h1 class="text-2xl text-center py-3 bg-blue-200">Langapp</h1>
+      <!-- Sentence in English and Finnish -->
+      <div class="mx-8 lg:mx-20 lg:text-5xl">
+        <!-- English sentence -->
+        <p
+          x-text="engSentences[sentenceI]"
+          class="mb-8 font-mono leading-normal"
+        ></p>
+        <hr class="mb-8" />
 
-          <!-- Finnish sentence -->
-          <div class="font-mono leading-loose">
-            <template x-for="(word, i) in words">
-              <span @click="toggleWord(i)">
-                <span
-                  x-show="!wordStatusRegister[sentenceI][i] && !hintsAreShown"
-                  x-text="blanks[i]"
-                  class="cursor-pointer rounded-lg text-gray-600 py-2"
-                  :class="i === wordI && 'border-b-4 border-blue-300'"
-                ></span>
-                <span
-                  x-show="!wordStatusRegister[sentenceI][i] && hintsAreShown"
-                  x-text="hints[i]"
-                  class="cursor-pointer rounded-md text-gray-600 py-2"
-                  :class="i === wordI && 'border-b-4 border-blue-300'"
-                  :class="i === wordI && 'border-b-4 border-blue-300'"
-                ></span>
-                <span
-                  x-show="wordStatusRegister[sentenceI][i]"
-                  x-text="word"
-                  class="py-2 rounded-lg"
-                  :class="i === wordI && 'border-b-4 border-blue-300'"
-                ></span>
-              </span>
-            </template>
-          </div>
-
-          <!-- Sentence buttons -->
-          <div class="mt-16 text-lg">
-            <!-- Hide all button -->
-            <button
-              :class="allWordsAreHidden && 'pointer-events-none opacity-25'"
-              class="px-4 py-1 mx-2 border-2 rounded-md"
-              @click="hideAllWords()"
-            >
-              Hide all
-            </button>
-
-            <!-- Show all button -->
-            <button
-              :class="allWordsAreShown ? 'pointer-events-none opacity-25' : ''"
-              class="px-4 py-1 mx-2 border-2 rounded-md"
-              @click="showAllWords()"
-            >
-              Show all
-            </button>
-
-            <!-- Hints button -->
-            <button
-              x-text="hintsAreShown ? 'Hide hints' : 'Show hints'"
-              :class="allWordsAreShown ? 'pointer-events-none opacity-25' : ''"
-              class="px-4 py-1 mx-2 border-2 rounded-md"
-              @click="toggleHints()"
-            ></button>
-          </div>
-        </div>
-
-        <!-- Navigate sentences buttons -->
-        <div class="m-8 text-lg">
-          <!-- Previous sentence button -->
-          <button
-            :class="sentenceI === 0 ? 'pointer-events-none opacity-25' : ''"
-            class="px-4 py-1 mx-2 border-2 rounded-md"
-            @click="changeSentence('previous')"
-          >
-            <-
-          </button>
-
-          <span x-text="sentenceI + 1"></span>
-          <span>/</span>
-          <span x-text="finSentences.length"></span>
-
-          <!-- Next sentence button  -->
-          <button
-            :class="sentenceI === finSentences.length - 1 && 'pointer-events-none opacity-25'"
-            class="px-4 py-1 mx-2 border-2 rounded-md"
-            @click="changeSentence('next')"
-          >
-            ->
-          </button>
+        <!-- Finnish sentence -->
+        <div class="font-mono leading-loose">
+          <template x-for="(word, i) in words">
+            <span @click="toggleWord(i)">
+              <span
+                x-show="!wordStatusRegister[sentenceI][i] && !hintsAreShown"
+                x-text="blanks[i]"
+                class="cursor-pointer rounded-lg text-gray-600 py-2"
+                :class="i === wordI && 'border-b-4 border-blue-300'"
+              ></span>
+              <span
+                x-show="!wordStatusRegister[sentenceI][i] && hintsAreShown"
+                x-text="hints[i]"
+                class="cursor-pointer rounded-md text-gray-600 py-2"
+                :class="i === wordI && 'border-b-4 border-blue-300'"
+                :class="i === wordI && 'border-b-4 border-blue-300'"
+              ></span>
+              <span
+                x-show="wordStatusRegister[sentenceI][i]"
+                x-text="word"
+                class="py-2 rounded-lg"
+                :class="i === wordI && 'border-b-4 border-blue-300'"
+              ></span>
+            </span>
+          </template>
         </div>
       </div>
 
-      <!-- Progress section -->
-      <div>
-        <div class="flex items-center justify-center mb-6">
-          <span>Progress: </span>
-          <span x-text="progress" class="ml-2 text-3xl"></span>
-          <span class="ml-1 text-2xl">%</span>
+      <div class="mx-8 lg:mx-20">
+        <!-- Sentence buttons section -->
+        <div
+          class="text-lg text-center mb-6 grid justify-between"
+          style="grid-template-columns: 1fr auto 1fr"
+        >
+          <!-- Grid child 1: Sentence control buttons -->
+          <div class="flex items-center justify-start">
+            <!-- Toggle all button -->
+            <button
+              x-text="allWordsAreHidden ? 'Show all' : 'Hide all'"
+              class="px-4 py-1 mr-2 border-2 rounded-md border-gray-300"
+              @click="toggleSentence()"
+            ></button>
+
+            <!-- Toggle hints button -->
+            <button
+              x-text="hintsAreShown ? 'Hide hints' : 'Show hints'"
+              :class="allWordsAreShown ? 'pointer-events-none opacity-25' : ''"
+              class="px-4 py-1 mx-2 border-2 rounded-md border-gray-300"
+              @click="toggleHints()"
+            ></button>
+          </div>
+
+          <!-- Grid child 2: Navigation buttons and info -->
+          <div>
+            <!-- Previous sentence button -->
+            <button
+              :class="sentenceI === 0 ? 'pointer-events-none opacity-25' : ''"
+              class="px-4 py-1 mx-2 border-2 rounded-md border-gray-300"
+              @click="changeSentence('previous')"
+            >
+              <-
+            </button>
+
+            <!-- Sentence nav info -->
+            <span x-text="sentenceI + 1"></span>
+            <span>/</span>
+            <span x-text="finSentences.length"></span>
+
+            <!-- Next sentence button  -->
+            <button
+              :class="sentenceI === finSentences.length - 1 && 'pointer-events-none opacity-25'"
+              class="px-4 py-1 mx-2 border-2 rounded-md border-gray-300"
+              @click="changeSentence('next')"
+            >
+              ->
+            </button>
+          </div>
+
+          <!-- Grid child 3: Progress percent info -->
+          <div class="flex items-center justify-end">
+            <span>Progress: </span>
+            <span x-text="progress" class="ml-2 text-3xl"></span>
+            <span class="ml-1 text-2xl">%</span>
+          </div>
         </div>
-        <div class="grid grid-cols-10 gap-2">
+
+        <!-- Progress indicators section -->
+        <div
+          class="grid gap-2"
+          style="grid-template-columns: repeat(20, minmax(0, 1fr))"
+        >
           <template x-for="(sentenceStatus, i) in sentenceStatusRegister">
             <span
               x-text="i + 1"
@@ -323,19 +324,19 @@
                 sentenceStatus === 'tolearn' && i === sentenceI
                   ? 'bg-red-300 font-bold'
                   : sentenceStatus === 'tolearn'
-                  ? 'bg-red-200 hover:bg-red-300'
+                  ? 'bg-red-100 hover:bg-red-300'
                   : sentenceStatus === 'learning' && i === sentenceI
                   ? 'bg-yellow-300 font-bold'
                   : sentenceStatus === 'learning'
-                  ? 'bg-yellow-200 hover:bg-yellow-300'
+                  ? 'bg-yellow-100 hover:bg-yellow-300'
                   : sentenceStatus === 'learnt' && i === sentenceI
                   ? 'bg-green-300 font-bold'
-                  : 'bg-green-200 hover:bg-green-300'
+                  : 'bg-green-100 hover:bg-green-300'
                 "
             ></span>
           </template>
         </div>
-        <div class="mt-12">
+        <!-- <div class="mt-12">
           <div class="flex justify-center">
             <h2
               x-text="instructionsAreShown ? 'Hide instructions' : 'Show instructions'"
@@ -440,7 +441,7 @@
               sentences turn green, and uncompleted sentences remain red.
             </p>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </body>
