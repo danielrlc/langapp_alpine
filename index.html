@@ -1,16 +1,21 @@
 <html>
   <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Langapp w/ Alpine.js</title>
     <script defer src="alpine.js"></script>
     <link href="tailwind.css" rel="stylesheet" />
   </head>
   <body
-    @keydown.space.window="toggleWordStatus(wordI)"
-    @keydown.h.window="goToPreviousWord()"
-    @keydown.l.window="goToNextWord()"
-    @keydown.j.window="changeSentence('next')"
-    @keydown.k.window="changeSentence('previous')"
-    @keydown.s.window="toggleSentence()"
-    @keydown.t.window="toggleHints()"
+    @keydown.k.window="changeSentence('next')"
+    @keydown.j.window="changeSentence('previous')"
+    @keydown.a.window="toggleSentence()"
+    @keydown.o.window="toggleHints()"
+    @keydown.left.window="goToPreviousWord()"
+    @keydown.right.window="goToNextWord()"
+    @keydown.up.window="toggleWord(wordI)"
+    @keydown.down.window="changeSentence('next')"
     x-data="{
       init: function() {
         this.setUpWordStatusRegister()
@@ -37,6 +42,26 @@
         `Pullot me palautetaan kauppaan, koska niistä saa pantin.`,
         `Lasipurkit me viedään lasinkeräykseen.`,
         `Tuolla pihalla on iso jätekatos.`,
+        `Kaikki jätteet voi viedä sinne.`,
+        `Ohhoh, kuulostaa aika hankalalta, mut kiitti neuvoista.`,
+        `Sähkölaskumme kasvaa jatkuvasti.`,
+        `Vanha pakastin kuluttaa huomattavasti enemmän energiaa kuin uusi.`,
+        `Olisi hyvä tarkistaa, että ikkunanne ovat tiiviit – erityisesti, jos asutte vanhassa talossa.`,
+        `Toivottavasti seuraava sähkölaskunne on jo pienempi!`,
+        `Vettä säästyisi, jos vähentäisitte kylpyammeessa kylpemistä ja kävisitte sen sijaan useammin suihkussa.`,
+        `Tässä muutamia vinkkejä.`,
+        `Teidän kannattaisi lisäksi tarkistaa kodinkoneidenne ikä.`,
+        `Pesukone kannattaa käynnistää vasta kun se on täynnä.`,
+        `Lopuksi vielä yksi helppo vinkki.`,
+        `Haluaisitko tulla käymään meidän mökillä joskus?`,
+        `Joo, tulisin tosi mielelläni!`,
+        `En olisi uskonut, että Emma voittaa!`,
+        `Etkö? Hän olisi voinut voittaa jo viime vuonna, jos olisi osallistunut.`,
+        `Menisitkö uimaan, jos vesi olisi lämmintä?`,
+        `Jos voittaisin lotossa, matkustaisin Australiaan.`,
+        `Ottaisin kupin kahvia.`,
+        `Sanoisitko nimesi?`,
+        `Menisimmekö lomalla Portugaliin?`,
       ],
 
       engSentences: [
@@ -60,6 +85,26 @@
         `We return the bottles to the shop, because they get a deposit.`,
         `We take the glass jars to the glass recycling.`,
         `There is a big trash container in that yard.`,
+        `All the waste can be taken there.`,
+        `Oho, sounds quite awkward, but thanks for the tips.`,
+        `Our electricity bill is constantly growing.`,
+        `An old freezer consumes significantly more energy than a new one.`,
+        `It would be good to check if your windows are sealed – especially if you live in an old house.`,
+        `Hopefully your next electricity bill will already be smaller!`,
+        `You would save water if you bathed less in the bathtub and took a shower more often instead.`,
+        `Here are a few tips.`,
+        `You should also check the age of your appliances.`,
+        `The washing machine should only be started when it is full.`,
+        `Finally, one more easy tip.`,
+        `Would you like to come to our summer cottage sometime?`,
+        `Yeah, I'd love to come!`,
+        `I wouldn't have thought Emma would win!`,
+        `Don't you? She could have won last year if she had participated.`,
+        `Would you go swimming if the water was warm?`,
+        `If I won the lottery, I would travel to Australia.`,
+        `I'd like a cup of coffee.`,
+        `Would you say your name?`,
+        `Would we go on holiday to Portugal?`,
       ],
 
       get blanks() {
@@ -98,26 +143,32 @@
         }
       },
 
-      resetWordStatusRegister: function() {
-        this.wordStatusRegister[this.sentenceI] = this.words.map(word => false)
-      },
-
       get sentenceStatusRegister() {
-        return this.wordStatusRegister
-          .map(sentenceStatusRegister => sentenceStatusRegister
-          .every(status => status === true))
+        let register = []
+        for (let i = 0; i < this.wordStatusRegister.length; i++) {
+          let sentenceStatus = ''
+          if (this.wordStatusRegister[i].every(status => status === true)) {
+            sentenceStatus = 'learnt'
+          } else if (this.wordStatusRegister[i].every(status => status === false)) {
+            sentenceStatus = 'tolearn'
+          } else {
+            sentenceStatus = 'learning'
+          }
+          register[i] = sentenceStatus
+        }
+        return register
       },
 
       get progress() {
         return Math.round((this.sentenceStatusRegister
-          .filter(status => status).length / this.sentenceStatusRegister.length) * 100)
+          .filter(status => status === 'learnt').length / this.sentenceStatusRegister.length) * 100)
       },
 
-      get sentenceIsShown() {
+      get allWordsAreShown() {
         return this.wordStatusRegister[this.sentenceI].every(status => status === true)
       },
 
-      get sentenceIsReset() {
+      get allWordsAreHidden() {
         return this.wordStatusRegister[this.sentenceI].every(status => status === false)
       },
 
@@ -133,16 +184,16 @@
         }
       },
 
-      showWords: function() {
+      showAllWords: function() {
         this.wordStatusRegister[this.sentenceI] = this.words.map(word => true)
       },
 
-      resetSentence: function() {
-        this.resetWordStatusRegister()
+      hideAllWords: function() {
+        this.wordStatusRegister[this.sentenceI] = this.words.map(word => false)
       },
 
       toggleSentence: function() {
-        this.sentenceIsReset ? this.showWords() : this.resetSentence()
+        this.allWordsAreHidden ? this.showAllWords() : this.hideAllWords()
       },
 
       toggleHints: function() {
@@ -151,7 +202,7 @@
 
       instructionsAreShown: false,
       
-      toggleWordStatus: function(i) {
+      toggleWord: function(i) {
         this.wordStatusRegister[this.sentenceI][i] = !this.wordStatusRegister[this.sentenceI][i]
         this.wordI = i
       },
@@ -159,10 +210,10 @@
   >
     <h1 class="text-2xl text-center py-3 bg-blue-200">Langapp</h1>
     <div
-      class="mx-20 my-20 grid gap-32"
-      style="grid-template-columns: 1fr 400px"
+      class="mx-8 xl:mx-20 my-12 xl:my-20 grid gap-16 xl:gap-32"
+      style="grid-template-columns: 1fr 300px"
     >
-      <div class="text-center">
+      <div>
         <!-- Sentence in English and Finnish -->
         <div class="text-3xl">
           <!-- English sentence -->
@@ -175,25 +226,25 @@
           <!-- Finnish sentence -->
           <div class="font-mono leading-loose">
             <template x-for="(word, i) in words">
-              <span @click="toggleWordStatus(i)">
+              <span @click="toggleWord(i)">
                 <span
                   x-show="!wordStatusRegister[sentenceI][i] && !hintsAreShown"
                   x-text="blanks[i]"
                   class="cursor-pointer rounded-lg text-gray-600 py-2"
-                  :class="i === wordI && 'border-b-4 border-t-4 border-blue-300'"
+                  :class="i === wordI && 'border-b-4 border-blue-300'"
                 ></span>
                 <span
                   x-show="!wordStatusRegister[sentenceI][i] && hintsAreShown"
                   x-text="hints[i]"
                   class="cursor-pointer rounded-md text-gray-600 py-2"
                   :class="i === wordI && 'border-b-4 border-blue-300'"
-                  :class="i === wordI && 'border-b-4 border-t-4 border-blue-300'"
+                  :class="i === wordI && 'border-b-4 border-blue-300'"
                 ></span>
                 <span
                   x-show="wordStatusRegister[sentenceI][i]"
                   x-text="word"
                   class="py-2 rounded-lg"
-                  :class="i === wordI && 'border-b-4 border-t-4 border-blue-300'"
+                  :class="i === wordI && 'border-b-4 border-blue-300'"
                 ></span>
               </span>
             </template>
@@ -203,18 +254,18 @@
           <div class="mt-16 text-lg">
             <!-- Hide all button -->
             <button
-              :class="sentenceIsReset && 'pointer-events-none opacity-25'"
+              :class="allWordsAreHidden && 'pointer-events-none opacity-25'"
               class="px-4 py-1 mx-2 border-2 rounded-md"
-              @click="resetSentence()"
+              @click="hideAllWords()"
             >
               Hide all
             </button>
 
             <!-- Show all button -->
             <button
-              :class="sentenceIsShown ? 'pointer-events-none opacity-25' : ''"
+              :class="allWordsAreShown ? 'pointer-events-none opacity-25' : ''"
               class="px-4 py-1 mx-2 border-2 rounded-md"
-              @click="showWords()"
+              @click="showAllWords()"
             >
               Show all
             </button>
@@ -222,7 +273,7 @@
             <!-- Hints button -->
             <button
               x-text="hintsAreShown ? 'Hide hints' : 'Show hints'"
-              :class="sentenceIsShown ? 'pointer-events-none opacity-25' : ''"
+              :class="allWordsAreShown ? 'pointer-events-none opacity-25' : ''"
               class="px-4 py-1 mx-2 border-2 rounded-md"
               @click="toggleHints()"
             ></button>
@@ -240,6 +291,10 @@
             <-
           </button>
 
+          <span x-text="sentenceI + 1"></span>
+          <span>/</span>
+          <span x-text="finSentences.length"></span>
+
           <!-- Next sentence button  -->
           <button
             :class="sentenceI === finSentences.length - 1 && 'pointer-events-none opacity-25'"
@@ -250,38 +305,36 @@
           </button>
         </div>
       </div>
+
+      <!-- Progress section -->
       <div>
         <div class="flex items-center justify-center mb-6">
           <span>Progress: </span>
           <span x-text="progress" class="ml-2 text-3xl"></span>
           <span class="ml-1 text-2xl">%</span>
         </div>
-        <template x-for="(sentenceStatus, i) in sentenceStatusRegister">
-          <span @click="sentenceI = i" class="px-1 leading-3">
-            <br x-show="i % 10 == 0" />
+        <div class="grid grid-cols-10 gap-2">
+          <template x-for="(sentenceStatus, i) in sentenceStatusRegister">
             <span
-              x-text="i+1"
-              class="
-                w-7
-                py-1
-                inline-block
-                text-center
-                rounded
-                text-sm
-                cursor-pointer
-              "
+              x-text="i + 1"
+              @click="sentenceI = i"
+              class="text-center rounded text-sm cursor-pointer"
               :class="
-              sentenceStatus && i === sentenceI
-                ? 'bg-green-300 font-bold'
-                : sentenceStatus
-                ? 'bg-green-200 hover:bg-green-300'
-                : i === sentenceI
-                ? 'bg-red-300 font-bold'
-                : 'bg-red-200 hover:bg-red-300'
-            "
+                sentenceStatus === 'tolearn' && i === sentenceI
+                  ? 'bg-red-300 font-bold'
+                  : sentenceStatus === 'tolearn'
+                  ? 'bg-red-200 hover:bg-red-300'
+                  : sentenceStatus === 'learning' && i === sentenceI
+                  ? 'bg-yellow-300 font-bold'
+                  : sentenceStatus === 'learning'
+                  ? 'bg-yellow-200 hover:bg-yellow-300'
+                  : sentenceStatus === 'learnt' && i === sentenceI
+                  ? 'bg-green-300 font-bold'
+                  : 'bg-green-200 hover:bg-green-300'
+                "
             ></span>
-          </span>
-        </template>
+          </template>
+        </div>
         <div class="mt-12">
           <div class="flex justify-center">
             <h2
