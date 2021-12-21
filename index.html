@@ -4,8 +4,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Langapp w/ Alpine.js</title>
-    <script defer src="alpine.js"></script>
-    <link href="tailwind.css" rel="stylesheet" />
+    <!-- <link href="tailwind.css" rel="stylesheet" /> -->
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <!-- <script defer src="alpine.js"></script> -->
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
   </head>
   <body
     @keydown.k.window="changeSentence('next')"
@@ -235,13 +243,27 @@
               <span
                 x-show="!wordStatusRegister[sentenceI][i] && !hintsAreShown"
                 x-text="blanks[i]"
-                class="cursor-pointer rounded-lg text-gray-600 py-2 bg-gray-100 hover:bg-gray-200"
+                class="
+                  cursor-pointer
+                  rounded-lg
+                  text-gray-600
+                  py-2
+                  bg-gray-100
+                  hover:bg-gray-200
+                "
                 :class="i === wordI && 'border-b-4 border-blue-300'"
               ></span>
               <span
                 x-show="!wordStatusRegister[sentenceI][i] && hintsAreShown"
                 x-text="hints[i]"
-                class="cursor-pointer rounded-md text-gray-600 py-2 bg-gray-100 hover:bg-gray-200"
+                class="
+                  cursor-pointer
+                  rounded-md
+                  text-gray-600
+                  py-2
+                  bg-gray-100
+                  hover:bg-gray-200
+                "
                 :class="i === wordI && 'border-b-4 border-blue-300'"
                 :class="i === wordI && 'border-b-4 border-blue-300'"
               ></span>
@@ -311,7 +333,15 @@
             <!-- Previous sentence button -->
             <button
               :class="sentenceI === 0 ? 'pointer-events-none opacity-25' : ''"
-              class="px-4 py-1 mx-2 border-2 rounded-md border-gray-300 hover:border-gray-400"
+              class="
+                px-4
+                py-1
+                mx-2
+                border-2
+                rounded-md
+                border-gray-300
+                hover:border-gray-400
+              "
               @click="changeSentence('previous')"
             >
               <-
@@ -325,7 +355,15 @@
             <!-- Next sentence button  -->
             <button
               :class="sentenceI === finSentences.length - 1 && 'pointer-events-none opacity-25'"
-              class="px-4 py-1 mx-2 border-2 rounded-md border-gray-300 hover:border-gray-400"
+              class="
+                px-4
+                py-1
+                mx-2
+                border-2
+                rounded-md
+                border-gray-300
+                hover:border-gray-400
+              "
               @click="changeSentence('next')"
             >
               ->
@@ -515,7 +553,15 @@
           <span
             x-text="i + 1"
             @click="sentenceI = i; progressModalIsShown = false;"
-            class="text-center p-1 sm:px-3 sm:py-2 rounded text-sm sm:text-base cursor-pointer"
+            class="
+              text-center
+              p-1
+              sm:px-3 sm:py-2
+              rounded
+              text-sm
+              sm:text-base
+              cursor-pointer
+            "
             :class="
                 sentenceStatus === 'tolearn' && i === sentenceI
                   ? 'bg-red-200 font-bold border-2 border-red-500'
