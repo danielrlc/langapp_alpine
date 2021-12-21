@@ -206,17 +206,21 @@
         this.wordStatusRegister[this.sentenceI][i] = !this.wordStatusRegister[this.sentenceI][i]
         this.wordI = i
       },
+
+      progressModalIsShown: false,
     }"
   >
     <!-- The height is >100% to allow for a tiny scroll down on mobile, -->
-    <!-- which removes the space-wasting top and bottom bars. -->
+    <!-- which removes the space-wasting top and bottom bars on mobile browsers. -->
     <div
       class="grid gap-8 lg:gap-16 pb-4 lg:pb-8"
       style="grid-template-rows: auto 1fr auto; height: 100.2%"
     >
+      <!-- Langapp top bar -->
       <h1 class="text-2xl text-center py-3 bg-blue-200">Langapp</h1>
+
       <!-- Sentence in English and Finnish -->
-      <div class="mx-8 lg:mx-20 lg:text-5xl">
+      <div class="px-4 sm:px-8 lg:px-20 text-lg sm:text-2xl lg:text-4xl">
         <!-- English sentence -->
         <p
           x-text="engSentences[sentenceI]"
@@ -231,20 +235,20 @@
               <span
                 x-show="!wordStatusRegister[sentenceI][i] && !hintsAreShown"
                 x-text="blanks[i]"
-                class="cursor-pointer rounded-lg text-gray-600 py-2"
+                class="cursor-pointer rounded-lg text-gray-600 py-2 bg-gray-100 hover:bg-gray-200"
                 :class="i === wordI && 'border-b-4 border-blue-300'"
               ></span>
               <span
                 x-show="!wordStatusRegister[sentenceI][i] && hintsAreShown"
                 x-text="hints[i]"
-                class="cursor-pointer rounded-md text-gray-600 py-2"
+                class="cursor-pointer rounded-md text-gray-600 py-2 bg-gray-100 hover:bg-gray-200"
                 :class="i === wordI && 'border-b-4 border-blue-300'"
                 :class="i === wordI && 'border-b-4 border-blue-300'"
               ></span>
               <span
                 x-show="wordStatusRegister[sentenceI][i]"
                 x-text="word"
-                class="py-2 rounded-lg"
+                class="cursor-pointer py-2 hover:bg-gray-200 rounded-lg"
                 :class="i === wordI && 'border-b-4 border-blue-300'"
               ></span>
             </span>
@@ -254,16 +258,33 @@
 
       <div class="mx-8 lg:mx-20">
         <!-- Sentence buttons section -->
+        <!-- Grid parent -->
         <div
-          class="text-lg text-center mb-6 grid justify-between"
+          class="
+            text-xs
+            lg:text-lg
+            text-center
+            mb-0
+            lg:mb-6 lg:grid lg:justify-between
+          "
           style="grid-template-columns: 1fr auto 1fr"
         >
           <!-- Grid child 1: Sentence control buttons -->
-          <div class="flex items-center justify-start">
+          <div class="lg:justify-self-start mb-2 lg:mb-0">
             <!-- Toggle all button -->
             <button
               x-text="allWordsAreHidden ? 'Show all' : 'Hide all'"
-              class="px-4 py-1 mr-2 border-2 rounded-md border-gray-300"
+              class="
+                px-3
+                lg:px-4
+                py-1
+                mx-2
+                lg:ml-0
+                border-2
+                rounded-md
+                border-gray-300
+                hover:border-gray-400
+              "
               @click="toggleSentence()"
             ></button>
 
@@ -271,17 +292,26 @@
             <button
               x-text="hintsAreShown ? 'Hide hints' : 'Show hints'"
               :class="allWordsAreShown ? 'pointer-events-none opacity-25' : ''"
-              class="px-4 py-1 mx-2 border-2 rounded-md border-gray-300"
+              class="
+                px-3
+                lg:px-4
+                py-1
+                mx-2
+                border-2
+                rounded-md
+                border-gray-300
+                hover:border-gray-400
+              "
               @click="toggleHints()"
             ></button>
           </div>
 
           <!-- Grid child 2: Navigation buttons and info -->
-          <div>
+          <div class="mb-2 lg:mb-0">
             <!-- Previous sentence button -->
             <button
               :class="sentenceI === 0 ? 'pointer-events-none opacity-25' : ''"
-              class="px-4 py-1 mx-2 border-2 rounded-md border-gray-300"
+              class="px-4 py-1 mx-2 border-2 rounded-md border-gray-300 hover:border-gray-400"
               @click="changeSentence('previous')"
             >
               <-
@@ -295,7 +325,7 @@
             <!-- Next sentence button  -->
             <button
               :class="sentenceI === finSentences.length - 1 && 'pointer-events-none opacity-25'"
-              class="px-4 py-1 mx-2 border-2 rounded-md border-gray-300"
+              class="px-4 py-1 mx-2 border-2 rounded-md border-gray-300 hover:border-gray-400"
               @click="changeSentence('next')"
             >
               ->
@@ -303,16 +333,33 @@
           </div>
 
           <!-- Grid child 3: Progress percent info -->
-          <div class="flex items-center justify-end">
+          <div class="flex items-center justify-center lg:justify-self-end">
             <span>Progress: </span>
             <span x-text="progress" class="ml-2 text-3xl"></span>
             <span class="ml-1 text-2xl">%</span>
+            <button
+              class="
+                lg:hidden
+                px-4
+                py-1
+                mx-6
+                border-2
+                rounded-md
+                border-gray-300
+                hover:border-gray-400
+              "
+              @click="progressModalIsShown = true"
+            >
+              Progress
+            </button>
           </div>
+
+          <!-- Open progress modal on mobile button -->
         </div>
 
         <!-- Progress indicators section -->
         <div
-          class="grid gap-2"
+          class="hidden lg:gap-2 lg:grid"
           style="grid-template-columns: repeat(20, minmax(0, 1fr))"
         >
           <template x-for="(sentenceStatus, i) in sentenceStatusRegister">
@@ -322,15 +369,15 @@
               class="text-center rounded text-sm cursor-pointer"
               :class="
                 sentenceStatus === 'tolearn' && i === sentenceI
-                  ? 'bg-red-300 font-bold'
+                  ? 'bg-red-200 font-bold border-2 border-red-500'
                   : sentenceStatus === 'tolearn'
                   ? 'bg-red-100 hover:bg-red-300'
                   : sentenceStatus === 'learning' && i === sentenceI
-                  ? 'bg-yellow-300 font-bold'
+                  ? 'bg-yellow-300 font-bold border-2 border-yellow-500'
                   : sentenceStatus === 'learning'
                   ? 'bg-yellow-100 hover:bg-yellow-300'
                   : sentenceStatus === 'learnt' && i === sentenceI
-                  ? 'bg-green-300 font-bold'
+                  ? 'bg-green-300 font-bold border-2 border-green-500'
                   : 'bg-green-100 hover:bg-green-300'
                 "
             ></span>
@@ -442,6 +489,48 @@
             </p>
           </div>
         </div> -->
+      </div>
+    </div>
+    <div
+      class="
+        fixed
+        inset-0
+        bg-gray-600 bg-opacity-50
+        overflow-y-auto
+        h-full
+        w-full
+        flex
+        justify-center
+        items-center
+      "
+      x-show="progressModalIsShown"
+      @click="progressModalIsShown = false"
+    >
+      <!-- Section: Progress indicators in modal on mobile -->
+      <div
+        class="grid gap-2 sm:gap-4"
+        style="grid-template-columns: repeat(10, minmax(0, 1fr))"
+      >
+        <template x-for="(sentenceStatus, i) in sentenceStatusRegister">
+          <span
+            x-text="i + 1"
+            @click="sentenceI = i; progressModalIsShown = false;"
+            class="text-center p-1 sm:px-3 sm:py-2 rounded text-sm sm:text-base cursor-pointer"
+            :class="
+                sentenceStatus === 'tolearn' && i === sentenceI
+                  ? 'bg-red-200 font-bold border-2 border-red-500'
+                  : sentenceStatus === 'tolearn'
+                  ? 'bg-red-100 hover:bg-red-300'
+                  : sentenceStatus === 'learning' && i === sentenceI
+                  ? 'bg-yellow-300 font-bold border-2 border-yellow-500'
+                  : sentenceStatus === 'learning'
+                  ? 'bg-yellow-100 hover:bg-yellow-300'
+                  : sentenceStatus === 'learnt' && i === sentenceI
+                  ? 'bg-green-300 font-bold border-2 border-green-500'
+                  : 'bg-green-100 hover:bg-green-300'
+                "
+          ></span>
+        </template>
       </div>
     </div>
   </body>
