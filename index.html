@@ -14,14 +14,14 @@
     ></script>
   </head>
   <body
-    @keydown.k.window="changeSentence('next')"
-    @keydown.j.window="changeSentence('previous')"
-    @keydown.a.window="toggleSentence()"
-    @keydown.o.window="toggleHints()"
+    @keydown.;.window="changeSentence('previous')"
+    @keydown.q.window="changeSentence('next')"
+    @keydown.o.window="toggleSentence()"
+    @keydown.d.window="toggleHints()"
     @keydown.left.window="goToPreviousWord()"
     @keydown.right.window="goToNextWord()"
     @keydown.up.window="toggleWord(wordI)"
-    @keydown.down.window="changeSentence('next')"
+    @keydown.down.window="showNextThreeWords()"
     x-data="{
       init: function() {
         this.setUpWordStatusRegister()
@@ -68,6 +68,59 @@
         `Ottaisin kupin kahvia.`,
         `Sanoisitko nimesi?`,
         `Menisimmekö lomalla Portugaliin?`,
+        `Olisipa jo loma!`,
+        `Kunpa huomenna ei sataisi!`,
+        `Gepardi on nopea eläin.`,
+        `Gepardi juoksee nopeasti.`,
+        `Anna on kaunis.`,
+        `Anna laulaa kauniisti.`,
+        `Joku voisi ajatella, että ympäristöystävällisesti eläminen on hankalaa ja aikaa vievää.`,
+        `Näin ei kuitenkaan ole!`,
+        `Tässä joitakin vinkkejä, joilla voit helposti aloittaa uuden kestävän elämäntavan.`,
+        `Voit aloittaa vähentämällä mainospostia.`,
+        `Laita postiluukkuun lappu, jossa lukee 'Ei mainoksia', niin turhan paperin määrä vähenee heti.`,
+        `Pian huomaat, että sinun ei enää tarvitse kantaa niin paljon paperiroskaa roskikseen.`,
+        `Pidä aina mukanasi vähintään yksi kangaskassi, jotta et ostaisi kaupasta muovikassia joka kerta.`,
+        `Jos käyt kaupassa kolme kertaa viikossa, ostat vuodessa jopa 150 muovikassia!`,
+        `Jos et ostaisi niitä, säästäisit vuodessa hyvän ravintola-aterian hinnan!`,
+        `Tavallinen suomalainen neljän hengen perhe heittää noin 70 kg ruokaa roskiin vuodessa.`,
+        `Se on todella paljon.`,
+        `Voit kuitenkin tehdä monta asiaa, jotta ruoka menisi suuhun eikä roskikseen.`,
+        `On tärkeää, että et osta liian paljon ruokaa.`,
+        `Ennen kuin lähdet kauppaan, katso, mitä ruokaa jääkaapissa jo on.`,
+        `Suunnittele sitten, mitä ruokaa voit tehdä.`,
+        `Kirjoita ostoslista, niin ostat vähemmän.`,
+        `Älä mene nälkäisenä kauppaan – silloin ostat helposti paljon kaikenlaista.`,
+        `Jos haluat vaihtelua, sinun ei heti tarvitse ostaa uusia huonekaluja tai remontoida koko asuntoa.`,
+        `Voit kokeilla, miltä huoneet näyttävät, jos siirrät huonekalut uuteen paikkaan.`,
+        `Voit myös vaihtaa vain verhot.`,
+        `Jos osaat ommella, voit tehdä vanhoista verhoista uudet tyynyt mökille.`,
+        `Ennen kuin ostat uuden huonekalun kaupasta, käy katsomassa, mitä voit löytää kirpputorilta tai internet-huutokaupasta.`,
+        `Kun ostat uutta, osta kestävää!`,
+        `Yritä myös vähentää autoilua.`,
+        `Jos asut kaupungissa, opettele käyttämään julkista liikennettä, kävele lyhyet matkat tai ota pyörä käyttöön.`,
+        `Ensin voi olla vaikeaa jättää auto pihaan, mutta bussiin, pyöräilyyn ja kävelyyn tottuu nopeasti, ja ulkona liikkuminen on sekä hauskaa että terveellistä.`,
+        `Lisää vinkkejä saat kotisivuiltamme internetistä.`,
+        `Onnea matkaan ja hyvää kestävää elämää sinulle!`,
+        `Mitä tää paita maksaa?`,
+        `Kuka toi on?`,
+        `Onks tossa pullossa vettä?`,
+        `Mä en tunne tota miestä.`,
+        `Onks nää mansikat kotimaisia?`,
+        `Annaks mulle noi sakset?`,
+        `Mul on tänään vapaapäivä, mut maanantaina mä meen taas töihin.`,
+        `Mä luulin, et sä tuut vasta tiistaina!`,
+        `Voinks mä lainata sun puhelinta, ku mun oma jäi kotiin?`,
+        `Käydään ensin syömässä ja mennään sit leffaan.`,
+        `Mä en kyl haluu jäädä yksin kotiin!`,
+        `Mä olin tänään kurssilla, vaik mulla oli kuumetta.`,
+        `Mitä Uitöt tällä hetkellä tekevät, jotta he suojelisivat ympäristöä?`,
+        `Miksi Olga Uitto kirjoittaa Kuluttaja-lehteen?`,
+        `Mitä pitäisi tehdä, kun lähtee pois huoneesta?`,
+        `Miten Uitot voisivat pienentää sähkölaskua 5 %?`,
+        `Miksi vanhat kodinkoneet eivät ole ympäristöystävällisiä?`,
+        `Miksi on parempi käydä suihkussa kuin kylvyssä?`,
+        `Mitä talvella kannattaa tehdä, jotta energiaa säästyy?`,
       ],
 
       engSentences: [
@@ -111,6 +164,59 @@
         `I'd like a cup of coffee.`,
         `Would you say your name?`,
         `Would we go on holiday to Portugal?`,
+        `Have a vacation already!`,
+        `I wish it wouldn't rain tomorrow!`,
+        `The cheetah is a fast animal.`,
+        `The cheetah runs fast.`,
+        `Anna is beautiful.`,
+        `Anna sings beautifully.`,
+        `One might think that living in an environmentally friendly way is difficult and time consuming.`,
+        `However, this is not the case!`,
+        `Here are some tips to help you easily start a new sustainable lifestyle.`,
+        `To get started, reduce your promotional mail.`,
+        `Put a note in the mailbox that says 'No Ads' to reduce the amount of unnecessary paper immediately.`,
+        `You will soon find that you no longer have to carry so much paper waste in your trash.`,
+        `Always keep at least one canvas bag with you so you don't buy a plastic bag from the store every time.`,
+        `If you go to the store three times a week, you will buy up to 150 plastic bags a year!`,
+        `If you didn't buy them, you would save in a year a good restaurant meal!`,
+        `An ordinary Finnish family of four throws about 70 kg of food in the rubbish a year.`,
+        `That's really a lot.`,
+        `However, there are many things you can do to keep food in your mouth and not in the trash.`,
+        `It is important that you do not buy too much food.`,
+        `Before you go shopping, see what food is already in the fridge.`,
+        `Then plan what food you can make.`,
+        `Write a shopping list so you buy less.`,
+        `Don't go hungry to shop - then you'll easily buy a lot of everything.`,
+        `If you want variation, you don't have to buy new furniture or renovate an entire apartment right away.`,
+        `You can try what the rooms will look like if you move the furniture to a new location.`,
+        `You can also change only the curtains.`,
+        `If you know how to sew, you can make old curtains into new pillows for the cottage.`,
+        `Before you buy new furniture from a store, take a look at what you can find at a flea market or online auction.`,
+        `When you buy new, buy sustainable!`,
+        `Also try to reduce driving.`,
+        `If you live in the city, learn to use public transport, walk short distances or use a bike.`,
+        `At first, it can be hard to leave your car in the yard, but getting used to the bus, biking, and walking is quick, and getting around is both fun and healthy.`,
+        `You can find more tips on our website.`,
+        `Good luck on your journey and a good sustainable life for you!`,
+        `What does this shirt cost?`,
+        `Who is that?`,
+        `Is there a bottle of water over there?`,
+        `I don't know the real man.`,
+        `Are these strawberries domestic?`,
+        `Would you give me those scissors?`,
+        `I have a day off today, but I'm going to work again on Monday.`,
+        `I thought you weren't coming until Tuesday!`,
+        `Can I borrow your phone as I left my own at home?`,
+        `Let's go eat first and then go to the movies.`,
+        `I don't want to be left home alone!`,
+        `I was on a course today, even though I had a fever.`,
+        `What are the Uitos currently doing to protect the environment?`,
+        `Why does Olga Uitto write to the consumer magazine?`,
+        `What should I do when leaving the room?`,
+        `How could the Uitos do to reduce their electricity bill by 5%?`,
+        `Why aren't old appliances environmentally friendly?`,
+        `Why is it better to take a shower than a bath?`,
+        `What should you do in the winter to save energy?`,
       ],
 
       get blanks() {
@@ -200,6 +306,7 @@
 
       toggleSentence: function() {
         this.allWordsAreHidden ? this.showAllWords() : this.hideAllWords()
+        this.wordI = 0
       },
 
       toggleHints: function() {
@@ -213,66 +320,178 @@
         this.wordI = i
       },
 
-      progressModalIsShown: false,
+      showCurrentWord: function() {
+        this.wordStatusRegister[this.sentenceI][this.wordI] = true
+      },
+
+      showNextThreeWords: function() {
+        this.showCurrentWord()
+        this.goToNextWord()
+        this.showCurrentWord()
+        this.goToNextWord()
+        this.showCurrentWord()
+        this.goToNextWord()
+      },
     }"
   >
-    <!-- The height is >100% to allow for a tiny scroll down on mobile, -->
-    <!-- which removes the space-wasting top and bottom bars on mobile browsers. -->
     <div
       class="grid gap-8 lg:gap-16 pb-4 lg:pb-8"
-      style="grid-template-rows: auto 1fr auto; height: 100.2%"
+      style="grid-template-rows: auto 1fr auto; height: 100%"
     >
       <!-- Langapp top bar -->
-      <h1 class="text-2xl text-center py-3 bg-blue-200">Langapp</h1>
+      <div class="flex justify-between px-6 py-1 bg-blue-200">
+        <h1 class="text-2xl">Langapp</h1>
+        <button
+          x-text="instructionsAreShown ? 'Hide instructions' : 'Show instructions'"
+          class="underline"
+          @click="instructionsAreShown = !instructionsAreShown"
+        ></button>
+      </div>
 
-      <!-- Sentence in English and Finnish -->
-      <div class="px-4 sm:px-8 lg:px-20 text-lg sm:text-2xl lg:text-4xl">
-        <!-- English sentence -->
-        <p
-          x-text="engSentences[sentenceI]"
-          class="mb-8 font-mono leading-normal"
-        ></p>
-        <hr class="mb-8" />
+      <!-- Sentences and optional instructions -->
+      <div
+        class="px-4 sm:px-8 lg:px-20"
+        :class="instructionsAreShown && 'grid gap-8 lg:gap-20'"
+        style="grid-template-columns: 1fr auto"
+      >
+        <!-- Sentence in English and Finnish -->
+        <div class="text-lg sm:text-2xl lg:text-4xl">
+          <!-- English sentence -->
+          <p
+            x-text="engSentences[sentenceI]"
+            class="mb-8 font-mono leading-normal"
+          ></p>
+          <hr class="mb-8" />
 
-        <!-- Finnish sentence -->
-        <div class="font-mono leading-loose">
-          <template x-for="(word, i) in words">
-            <span @click="toggleWord(i)">
-              <span
-                x-show="!wordStatusRegister[sentenceI][i] && !hintsAreShown"
-                x-text="blanks[i]"
-                class="
-                  cursor-pointer
-                  rounded-lg
-                  text-gray-600
-                  py-2
-                  bg-gray-100
-                  hover:bg-gray-200
-                "
-                :class="i === wordI && 'border-b-4 border-blue-300'"
-              ></span>
-              <span
-                x-show="!wordStatusRegister[sentenceI][i] && hintsAreShown"
-                x-text="hints[i]"
-                class="
-                  cursor-pointer
-                  rounded-md
-                  text-gray-600
-                  py-2
-                  bg-gray-100
-                  hover:bg-gray-200
-                "
-                :class="i === wordI && 'border-b-4 border-blue-300'"
-                :class="i === wordI && 'border-b-4 border-blue-300'"
-              ></span>
-              <span
-                x-show="wordStatusRegister[sentenceI][i]"
-                x-text="word"
-                class="cursor-pointer py-2 hover:bg-gray-200 rounded-lg"
-                :class="i === wordI && 'border-b-4 border-blue-300'"
-              ></span>
-            </span>
-          </template>
+          <!-- Finnish sentence -->
+          <div class="font-mono leading-loose">
+            <template x-for="(word, i) in words">
+              <span @click="toggleWord(i)">
+                <span
+                  x-show="!wordStatusRegister[sentenceI][i] && !hintsAreShown"
+                  x-text="blanks[i]"
+                  class="
+                    cursor-pointer
+                    rounded-lg
+                    text-gray-600
+                    py-2
+                    bg-red-100
+                    hover:bg-red-200
+                  "
+                  :class="i === wordI && 'border-b-4 border-blue-300'"
+                ></span>
+                <span
+                  x-show="!wordStatusRegister[sentenceI][i] && hintsAreShown"
+                  x-text="hints[i]"
+                  class="
+                    cursor-pointer
+                    rounded-md
+                    text-gray-600
+                    py-2
+                    bg-red-100
+                    hover:bg-red-200
+                  "
+                  :class="i === wordI && 'border-b-4 border-blue-300'"
+                  :class="i === wordI && 'border-b-4 border-blue-300'"
+                ></span>
+                <span
+                  x-show="wordStatusRegister[sentenceI][i]"
+                  x-text="word"
+                  class="cursor-pointer py-2 hover:bg-gray-200 rounded-lg"
+                  :class="i === wordI && 'border-b-4 border-blue-300'"
+                ></span>
+              </span>
+            </template>
+          </div>
+        </div>
+
+        <!-- Instructions section -->
+        <div x-show="instructionsAreShown" class="max-w-md">
+          <h2 class="font-bold text-xl mb-4">Instructions</h2>
+          <p class="mb-4">
+            Translate the given English sentence into Finnish in your head.
+            After translating a word, click on the blank
+            <span class="bg-gray-100 py-1 mx-1">______</span> to see if you were
+            correct.
+          </p>
+          <p class="mb-4">
+            If you get a word wrong, click on it again to hide it and try again
+            later.
+          </p>
+          <p class="mb-4">
+            Click on
+            <span class="px-2 py-1 mx-1 border-2 rounded-md">Show all</span>
+            to show all the words.
+          </p>
+          <p class="mb-4">
+            Click on
+            <span class="px-2 py-1 mx-1 border-2 rounded-md">Hide all</span>
+            to hide all the words.
+          </p>
+          <p class="mb-4">
+            Click on
+            <span class="px-2 py-1 mx-1 border-2 rounded-md">Show hints</span>
+            to turn the hints on. A hint is the first letter of the word and its
+            length.
+          </p>
+          <p class="mb-4">
+            Do you want to repeat this sentence later? If so, leave some or all
+            the words hidden and come back to it later. If not, leave all the
+            words showing.
+          </p>
+          <p class="mb-4">
+            Click on
+            <span class="px-2 py-1 mx-1 border-2 rounded-md">-></span>
+            to go to the next sentence.
+          </p>
+          <p class="mb-4">
+            Jump around between sentences by clicking on the sentence numbers
+            like
+            <span
+              class="
+                bg-red-200
+                w-7
+                py-1
+                mx-1
+                inline-block
+                text-center
+                rounded
+                text-sm
+              "
+              >1</span
+            >
+            <span
+              class="
+                bg-red-200
+                w-7
+                py-1
+                mx-1
+                inline-block
+                text-center
+                rounded
+                text-sm
+              "
+              >2</span
+            >
+            <span
+              class="
+                bg-red-200
+                w-7
+                py-1
+                mx-1
+                inline-block
+                text-center
+                rounded
+                text-sm
+              "
+              >3</span
+            >
+            below.
+          </p>
+          <p class="mb-4">
+            Your progress on each sentence is tracked above. Completed sentences
+            turn green, and uncompleted sentences remain red.
+          </p>
         </div>
       </div>
 
@@ -291,6 +510,24 @@
         >
           <!-- Grid child 1: Sentence control buttons -->
           <div class="lg:justify-self-start mb-2 lg:mb-0">
+            <!-- Show next three words button -->
+            <button
+              :class="allWordsAreShown ? 'pointer-events-none opacity-25' : ''"
+              class="
+                px-3
+                lg:px-4
+                py-1
+                mr-2
+                border-2
+                rounded-md
+                border-gray-300
+                hover:border-gray-400
+              "
+              @click="showNextThreeWords()"
+            >
+              Show 3
+            </button>
+
             <!-- Toggle all button -->
             <button
               x-text="allWordsAreHidden ? 'Show all' : 'Hide all'"
@@ -373,21 +610,6 @@
             <span>Progress: </span>
             <span x-text="progress" class="ml-2 text-3xl"></span>
             <span class="ml-1 text-2xl">%</span>
-            <button
-              class="
-                lg:hidden
-                px-4
-                py-1
-                mx-6
-                border-2
-                rounded-md
-                border-gray-300
-                hover:border-gray-400
-              "
-              @click="progressModalIsShown = true"
-            >
-              Progress
-            </button>
           </div>
 
           <!-- Open progress modal on mobile button -->
@@ -395,186 +617,30 @@
 
         <!-- Progress indicators section -->
         <div
-          class="hidden lg:gap-2 lg:grid"
-          style="grid-template-columns: repeat(20, minmax(0, 1fr))"
+          class="grid gap-x-1.5 gap-y-2"
+          style="grid-template-columns: repeat(50, minmax(0, 1fr))"
         >
           <template x-for="(sentenceStatus, i) in sentenceStatusRegister">
             <span
               x-text="i + 1"
               @click="sentenceI = i"
-              class="text-center rounded text-sm cursor-pointer"
+              class="text-center rounded-md text-sm cursor-pointer"
               :class="
                 sentenceStatus === 'tolearn' && i === sentenceI
-                  ? 'bg-red-200 font-bold border-2 border-red-500'
+                  ? 'bg-red-800 font-bold text-white'
                   : sentenceStatus === 'tolearn'
                   ? 'bg-red-100 hover:bg-red-300'
                   : sentenceStatus === 'learning' && i === sentenceI
-                  ? 'bg-yellow-300 font-bold border-2 border-yellow-500'
+                  ? 'bg-yellow-700 font-bold text-white'
                   : sentenceStatus === 'learning'
                   ? 'bg-yellow-100 hover:bg-yellow-300'
                   : sentenceStatus === 'learnt' && i === sentenceI
-                  ? 'bg-green-300 font-bold border-2 border-green-500'
+                  ? 'bg-green-800 font-bold text-white'
                   : 'bg-green-100 hover:bg-green-300'
                 "
             ></span>
           </template>
         </div>
-        <!-- <div class="mt-12">
-          <div class="flex justify-center">
-            <h2
-              x-text="instructionsAreShown ? 'Hide instructions' : 'Show instructions'"
-              @click="instructionsAreShown = !instructionsAreShown"
-              class="
-                text-center
-                bg-gray-200
-                hover:bg-gray-300
-                px-4
-                py-1
-                rounded
-                cursor-pointer
-                mb-6
-              "
-            >
-              Instructions
-            </h2>
-          </div>
-          <div x-show="instructionsAreShown">
-            <p class="mb-4">
-              Translate the given English sentence into Finnish in your head.
-              After translating a word, click on the blank
-              <span class="bg-red-100 py-1 mx-1">______</span> to see if you
-              were correct.
-            </p>
-            <p class="mb-4">
-              If you get a word wrong, click on it again to hide it and try
-              again later.
-            </p>
-            <p class="mb-4">
-              Click on
-              <span class="px-2 py-1 mx-1 border-2 rounded-md">Show all</span>
-              to show all the words.
-            </p>
-            <p class="mb-4">
-              Click on
-              <span class="px-2 py-1 mx-1 border-2 rounded-md">Hide all</span>
-              to hide all the words.
-            </p>
-            <p class="mb-4">
-              Click on
-              <span class="px-2 py-1 mx-1 border-2 rounded-md">Show hints</span>
-              to turn the hints on. A hint is the first letter of the word and
-              its length.
-            </p>
-            <p class="mb-4">
-              Do you want to repeat this sentence later? If so, leave some or
-              all the words hidden and come back to it later. If not, leave all
-              the words showing.
-            </p>
-            <p class="mb-4">
-              Click on
-              <span class="px-2 py-1 mx-1 border-2 rounded-md">-></span>
-              to go to the next sentence.
-            </p>
-            <p class="mb-4">
-              Jump around between sentences by clicking on the sentence numbers
-              like
-              <span
-                class="
-                  bg-red-200
-                  w-7
-                  py-1
-                  mx-1
-                  inline-block
-                  text-center
-                  rounded
-                  text-sm
-                "
-                >1</span
-              >
-              <span
-                class="
-                  bg-red-200
-                  w-7
-                  py-1
-                  mx-1
-                  inline-block
-                  text-center
-                  rounded
-                  text-sm
-                "
-                >2</span
-              >
-              <span
-                class="
-                  bg-red-200
-                  w-7
-                  py-1
-                  mx-1
-                  inline-block
-                  text-center
-                  rounded
-                  text-sm
-                "
-                >3</span
-              >
-              above.
-            </p>
-            <p class="mb-4">
-              Your progress on each sentence is tracked above. Completed
-              sentences turn green, and uncompleted sentences remain red.
-            </p>
-          </div>
-        </div> -->
-      </div>
-    </div>
-    <div
-      class="
-        fixed
-        inset-0
-        bg-gray-600 bg-opacity-50
-        overflow-y-auto
-        h-full
-        w-full
-        flex
-        justify-center
-        items-center
-      "
-      x-show="progressModalIsShown"
-      @click="progressModalIsShown = false"
-    >
-      <!-- Section: Progress indicators in modal on mobile -->
-      <div
-        class="grid gap-2 sm:gap-4"
-        style="grid-template-columns: repeat(10, minmax(0, 1fr))"
-      >
-        <template x-for="(sentenceStatus, i) in sentenceStatusRegister">
-          <span
-            x-text="i + 1"
-            @click="sentenceI = i; progressModalIsShown = false;"
-            class="
-              text-center
-              p-1
-              sm:px-3 sm:py-2
-              rounded
-              text-sm
-              sm:text-base
-              cursor-pointer
-            "
-            :class="
-                sentenceStatus === 'tolearn' && i === sentenceI
-                  ? 'bg-red-200 font-bold border-2 border-red-500'
-                  : sentenceStatus === 'tolearn'
-                  ? 'bg-red-100 hover:bg-red-300'
-                  : sentenceStatus === 'learning' && i === sentenceI
-                  ? 'bg-yellow-300 font-bold border-2 border-yellow-500'
-                  : sentenceStatus === 'learning'
-                  ? 'bg-yellow-100 hover:bg-yellow-300'
-                  : sentenceStatus === 'learnt' && i === sentenceI
-                  ? 'bg-green-300 font-bold border-2 border-green-500'
-                  : 'bg-green-100 hover:bg-green-300'
-                "
-          ></span>
-        </template>
       </div>
     </div>
   </body>
