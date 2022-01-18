@@ -370,9 +370,9 @@
       <!-- ................................................... -->
 
       <div
-        class="px-4 sm:px-8 lg:px-20"
+        class="px-4 sm:px-8 pt-20 justify-self-center"
         :class="(instructionsAreShown || shortcutsAreShown) && 'grid gap-8 lg:gap-20'"
-        style="grid-template-columns: 1fr auto auto"
+        style="grid-template-columns: 1fr auto auto; width: min(100rem, 80vw)"
       >
         <!-- ................................................... -->
         <!-- Sentence in English and Finnish -->
@@ -385,27 +385,31 @@
 
           <p
             x-text="engSentences[sentenceI]"
-            class="mb-8 font-mono leading-normal"
+            class="mb-16 leading-normal"
+            style="font-family: Lato, sans-serif"
           ></p>
-          <hr class="mb-8" />
+          <hr class="mb-12" />
 
           <!-- ................................................... -->
           <!-- Finnish sentence -->
           <!-- ................................................... -->
 
-          <div class="font-mono leading-loose">
+          <div
+            class="leading-loose"
+            style="font-family: Lato, sans-serif"
+          >
             <template x-for="(word, i) in words">
               <span @click="toggleWord(i)">
                 <span
                   x-show="!wordStatusRegister[sentenceI][i] && !hintsAreShown"
                   x-text="blanks[i]"
-                  class="cursor-pointer rounded-lg text-gray-600 py-2 bg-red-100 hover:bg-red-200"
+                  class="cursor-pointer rounded-lg text-gray-600 py-2 mx-1 bg-red-100 hover:bg-red-200"
                   :class="i === wordI && 'border-b-4 border-blue-300'"
                 ></span>
                 <span
                   x-show="!wordStatusRegister[sentenceI][i] && hintsAreShown"
                   x-text="hints[i]"
-                  class="cursor-pointer rounded-md text-gray-600 py-2 bg-red-100 hover:bg-red-200"
+                  class="cursor-pointer rounded-md text-gray-600 py-2 mx-1 bg-red-100 hover:bg-red-200"
                   :class="i === wordI && 'border-b-4 border-blue-300'"
                   :class="i === wordI && 'border-b-4 border-blue-300'"
                 ></span>
@@ -497,16 +501,18 @@
         </div>
       </div>
 
-      <div class="mx-8 lg:mx-20">
+      <div class="mx-8">
         <!-- ................................................... -->
         <!-- Sentence buttons section -->
         <!-- ................................................... -->
-
         <div
           class="text-xs lg:text-lg text-center mb-0 lg:mb-6 lg:grid lg:justify-between lg:items-center"
           style="grid-template-columns: 1fr auto 1fr"
         >
+          <!-- ................................................... -->
           <!-- Sentence info, eg 1/93 -->
+          <!-- ................................................... -->
+
           <div
             class="text-center rounded-md px-8 mr-4 pb-1 mr-auto"
             :class="
