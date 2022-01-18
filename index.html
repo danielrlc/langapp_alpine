@@ -318,9 +318,8 @@
         this.hintsAreShown = !this.hintsAreShown
       },
 
-      instructionsAreShown: false,
-      shortcutsAreShown: false,
-      
+      showHelpStatus: 'none',
+
       toggleWord: function(i) {
         this.wordStatusRegister[this.sentenceI][i] = !this.wordStatusRegister[this.sentenceI][i]
         this.wordI = i
@@ -354,14 +353,21 @@
       >
         <h1 class="text-2xl">Langapp</h1>
         <button
-          x-text="instructionsAreShown ? 'Hide instructions' : 'Show instructions'"
+          x-text="
+            showHelpStatus == 'none'
+            ? 'Show instructions'
+            : showHelpStatus == 'instructionsShowing'
+            ? 'Show shortcuts'
+            : 'Hide shortcuts'
+          "
           class="underline"
-          @click="instructionsAreShown = !instructionsAreShown"
-        ></button>
-        <button
-          x-text="shortcutsAreShown ? 'Hide shortcuts' : 'Show shortcuts'"
-          class="underline"
-          @click="shortcutsAreShown = !shortcutsAreShown"
+          @click="
+            showHelpStatus == 'none'
+            ? showHelpStatus = 'instructionsShowing'
+            : showHelpStatus == 'instructionsShowing'
+            ? showHelpStatus = 'shortcutsShowing'
+            : showHelpStatus = 'none'
+          "
         ></button>
       </div>
 
@@ -371,8 +377,8 @@
 
       <div
         class="px-4 sm:px-8 pt-20 justify-self-center"
-        :class="(instructionsAreShown || shortcutsAreShown) && 'grid gap-8 lg:gap-20'"
-        style="grid-template-columns: 1fr auto auto; width: min(120rem, 80vw)"
+        :class="(showHelpStatus == 'instructionsShowing' || showHelpStatus == 'shortcutsShowing') && 'grid gap-8 lg:gap-20'"
+        style="grid-template-columns: 1fr auto; width: min(120rem, 85vw)"
       >
         <!-- ................................................... -->
         <!-- Sentence in English and Finnish -->
@@ -394,10 +400,7 @@
           <!-- Finnish sentence -->
           <!-- ................................................... -->
 
-          <div
-            class="leading-loose"
-            style="font-family: Lato, sans-serif"
-          >
+          <div class="leading-loose" style="font-family: Lato, sans-serif">
             <template x-for="(word, i) in words">
               <span @click="toggleWord(i)">
                 <span
@@ -428,7 +431,7 @@
         <!-- Instructions section -->
         <!-- ................................................... -->
 
-        <div x-show="instructionsAreShown" class="max-w-md">
+        <div x-show="showHelpStatus == 'instructionsShowing'" class="max-w-md">
           <h2 class="font-bold text-xl mb-4">Instructions</h2>
           <p class="mb-4">
             Translate the given English sentence into Finnish in your head.
@@ -483,7 +486,7 @@
           </p>
         </div>
 
-        <div x-show="shortcutsAreShown">
+        <div x-show="showHelpStatus == 'shortcutsShowing'" class="max-w-md">
           <h2 class="mb-3 font-bold text-xl">Shortcuts</h2>
           <div
             class="mb-4 grid max-w-32"
