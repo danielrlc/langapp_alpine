@@ -122,6 +122,27 @@
         `Miksi vanhat kodinkoneet eivät ole ympäristöystävällisiä?`,
         `Miksi on parempi käydä suihkussa kuin kylvyssä?`,
         `Mitä talvella kannattaa tehdä, jotta energiaa säästyy?`,
+        `Kyllä on kylmä ilma ja bussi on taas myöhässä.`,
+        `Minulla on kamala flunssa ja huomenna alkaa loma.`,
+        `Tämä oli todella rankka viikko: paljon töitä ja vähän unta.`,
+        `Meillä on huomenna pihajuhlat.`,
+        `Grillaamme ulkona koko illan.`,
+        `En halua enää viettää iltoja yksin kotona.`,
+        `Miksi minun aina täytyy tehdä kaikki kotityöt yksin?`,
+        `Mitä tekisit, jos olisit kaupan kassalla ja huomaisit, että sinulla ei ole rahaa mukana?`,
+        `Mitä tekisit, jos löytäisit 100 euroa kadulta?`,
+        `Mitä tekisit, jos näkisit, että joku varastaa suklaapatukan kaupasta?`,
+        `Mitä tekisit, jos naapurisi soittaisi musiikkia niin kovaa, että se häiritsee sinua?`,
+        `Mitä tekisit, jos joku soittaisi ovikelloasi keskellä yötä?`,
+        `Mitä tekisit, jos unohtaisit sateenvarjosi bussiin?`,
+        `Mitä tekisit, jos lihoisit kuukaudessa 10 kg?`,
+        `Kierrättäisin muovipakkauksetkin, jos talossani olisi energiajäteastia.`,
+        `Lainaisin naapurille kanamunia, jos minulla olisi niitä.`,
+        `Jos meillä ei olisi omaa autoa, matkustaisimme Imatralle sukulaisten luo junalla.`,
+        `Söisitkö hernekeittoa, jos siinä ei olisi lihaa?`,
+        `Jos lähikauppa aukeaisi jo seitsemältä, kävisin kaupassa ennen töihin menemistä.`,
+        `Ystäväni tapaisivat sinut mielellään, jos vain pääsisit tulemaan mukaan.`,
+        `Lähtisittekö ulos, jos ei sataisi?`,
       ],
 
       engSentences: [
@@ -218,10 +239,33 @@
         `Why aren't old appliances environmentally friendly?`,
         `Why is it better to take a shower than a bath?`,
         `What should you do in the winter to save energy?`,
+        `Yes it is cold and the bus is late again.`,
+        `I have a horrible flu and the holidays are starting tomorrow.`,
+        `This was a really tough week: a lot of work and little sleep.`,
+        `We are having a garden party tomorrow.`,
+        `We grill outside all evening.`,
+        `I no longer want to spend evenings alone at home.`,
+        `Why do I always have to do all the housework alone?`,
+        `What would you do if you were at the checkout and realised you didn't have any money on you?`,
+        `What would you do if you found 100 euros on the street?`,
+        `What would you do if you saw someone steal a bar of chocolate from a store?`,
+        `What would you do if your neighbour played music so loud that it was bothering you?`,
+        `What would you do if someone rang your doorbell in the middle of the night?`,
+        `What would you do if you left your umbrella on the bus?`,
+        `What would you do if you put on 10kg in a month?`,
+        `I would also recycle plastic packaging, if I had an energy waste bin in my house.`,
+        `I would lend chicken eggs to a neighbour if I had them.`,
+        `If we didn’t have our own car, we would travel to Imatra to relatives by train.`,
+        `Would you eat pea soup without meat?`,
+        `If the convenience store opened at seven, I would go to the store before going to work.`,
+        `My friends would love to meet you if you would just come along.`,
+        `Would you go out if it wasn't raining?`,
       ],
 
       get blanks() {
-        return this.words.map(word => '_____')
+        return this.finSentences[this.sentenceI].split(' ')
+          .map(word => word.split('')
+          .map(letter => '_').join(''))
       },
 
       get hints() {
@@ -340,7 +384,7 @@
     }"
   >
     <div
-      class="grid gap-8 lg:gap-16 pb-4 lg:pb-8"
+      class="grid gap-8 lg:gap-16 pb-5"
       style="grid-template-rows: auto 1fr auto; height: 100%"
     >
       <!-- ................................................... -->
@@ -391,8 +435,7 @@
 
           <p
             x-text="engSentences[sentenceI]"
-            class="mb-16 leading-normal"
-            style="font-family: Lato, sans-serif"
+            class="mb-16 leading-normal font-mono" 
           ></p>
           <hr class="mb-12" />
 
@@ -400,19 +443,19 @@
           <!-- Finnish sentence -->
           <!-- ................................................... -->
 
-          <div class="leading-loose" style="font-family: Lato, sans-serif">
+          <div class="leading-loose font-mono">
             <template x-for="(word, i) in words">
               <span @click="toggleWord(i)">
                 <span
                   x-show="!wordStatusRegister[sentenceI][i] && !hintsAreShown"
                   x-text="blanks[i]"
-                  class="cursor-pointer rounded-lg text-gray-600 py-2 mx-1 bg-red-100 hover:bg-red-200"
+                  class="cursor-pointer rounded-lg text-gray-600 py-2 bg-red-100 hover:bg-red-200"
                   :class="i === wordI && 'border-b-4 border-blue-300'"
                 ></span>
                 <span
                   x-show="!wordStatusRegister[sentenceI][i] && hintsAreShown"
                   x-text="hints[i]"
-                  class="cursor-pointer rounded-md text-gray-600 py-2 mx-1 bg-red-100 hover:bg-red-200"
+                  class="cursor-pointer rounded-md text-gray-600 py-2 bg-red-100 hover:bg-red-200"
                   :class="i === wordI && 'border-b-4 border-blue-300'"
                   :class="i === wordI && 'border-b-4 border-blue-300'"
                 ></span>
