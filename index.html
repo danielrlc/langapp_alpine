@@ -243,7 +243,7 @@
         `I have a horrible flu and the holidays are starting tomorrow.`,
         `This was a really tough week: a lot of work and little sleep.`,
         `We are having a garden party tomorrow.`,
-        `We grill outside all evening.`,
+        `We are grilling outside all evening.`,
         `I no longer want to spend evenings alone at home.`,
         `Why do I always have to do all the housework alone?`,
         `What would you do if you were at the checkout and realised you didn't have any money on you?`,
@@ -420,7 +420,7 @@
       <!-- ................................................... -->
 
       <div
-        class="px-4 sm:px-8 pt-20 justify-self-center"
+        class="pt-20 justify-self-center"
         :class="(showHelpStatus == 'instructionsShowing' || showHelpStatus == 'shortcutsShowing') && 'grid gap-8 lg:gap-20'"
         style="grid-template-columns: 1fr auto; width: min(120rem, 85vw)"
       >
@@ -435,7 +435,7 @@
 
           <p
             x-text="engSentences[sentenceI]"
-            class="mb-16 leading-normal font-mono" 
+            class="mb-16 leading-normal font-mono"
           ></p>
           <hr class="mb-12" />
 
@@ -547,7 +547,7 @@
         </div>
       </div>
 
-      <div class="mx-8">
+      <div class="mx-auto" style="width: min(120rem, 85vw)">
         <!-- ................................................... -->
         <!-- Sentence buttons section -->
         <!-- ................................................... -->
@@ -601,9 +601,7 @@
               x-text="allWordsAreShown ? 'Hide all' : 'Show all'"
               class="px-3 lg:px-4 py-1 mx-2 lg:ml-0 border-2 rounded-md border-gray-300 hover:border-gray-400"
               @click="toggleSentence()"
-            >
-              Show all (correct this)
-            </button>
+            ></button>
 
             <button
               :class="sentenceI === 0 ? 'pointer-events-none opacity-25' : ''"
@@ -662,30 +660,41 @@
         <!-- Progress indicators section -->
         <!-- ................................................... -->
 
-        <div
-          class="grid gap-x-1.5 gap-y-2"
-          style="grid-template-columns: repeat(50, minmax(0, 1fr))"
-        >
-          <template x-for="(sentenceStatus, i) in sentenceStatusRegister">
-            <span
-              x-text="i + 1"
-              @click="sentenceI = i"
-              class="text-center rounded-md text-sm cursor-pointer"
-              :class="
+        <div style="width: min(120rem, 85vw);">
+          <div
+            class="grid gap-2"
+            style="grid-template-columns: repeat(50, 1fr)"
+          >
+            <template x-for="(sentenceStatus, i) in sentenceStatusRegister">
+              <span
+                @click="sentenceI = i"
+                class="text-sm text-center rounded-md cursor-pointer flex h-5 w-5 pb-1 items-center justify-center"
+                :class="
                 sentenceStatus === 'tolearn' && i === sentenceI
                   ? 'bg-red-800 font-bold text-white'
                   : sentenceStatus === 'tolearn'
                   ? 'bg-red-100 hover:bg-red-300'
                   : sentenceStatus === 'learning' && i === sentenceI
-                  ? 'bg-yellow-700 font-bold text-white'
+                  ? 'bg-yellow-600 font-bold text-white'
                   : sentenceStatus === 'learning'
                   ? 'bg-yellow-100 hover:bg-yellow-300'
                   : sentenceStatus === 'learnt' && i === sentenceI
                   ? 'bg-green-800 font-bold text-white'
                   : 'bg-green-100 hover:bg-green-300'
                 "
-            ></span>
-          </template>
+              >
+                <span
+                  x-text="
+                sentenceStatus === 'tolearn'
+                  ? '.'
+                  : sentenceStatus === 'learning'
+                  ? 'o'
+                  : 'x'
+                "
+                ></span>
+              </span>
+            </template>
+          </div>
         </div>
       </div>
     </div>
