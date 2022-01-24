@@ -3,20 +3,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Langapp w/ Alpine.js</title>
-    <link
-      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <script
-      defer
-      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
-    ></script>
+    <title>Langapp</title>
+    <link href="tailwind.min.css" rel="stylesheet" />
+    <script defer src="alpine.min.js"></script>
   </head>
 
+  <!-- #mark - start of app -->
   <body
-    @keydown.;.window="changeSentence('previous')"
-    @keydown.q.window="changeSentence('next')"
+    @keydown.;.window="changeSentence('back 1')"
+    @keydown.q.window="changeSentence('forward 1')"
     @keydown.o.window="toggleSentence()"
     @keydown.d.window="toggleHints()"
     @keydown.left.window="goToPreviousWord()"
@@ -29,257 +24,268 @@
       },
 
       finSentences: [
-        `Diego on muuttanut opiskelija-asuntoon Junatielle.`,
-        `Asunto on soluasunto, jossa asuu Diegon lisäksi neljä muuta opiskelijaa.`,
-        `Diego ihmettelee, miksi keittiön kaapissa on neljä erilaista jäteastiaa.`,
-        `Moi Siiri, voisiks sä auttaa mua?`,
-        `Mä en tiedä, mihin roskikseen nää banaaninkuoret pitää laittaa.`,
-        `Joo, totta kai.`,
-        `Banaaninkuoret on biojätettä.`,
-        `Toi pieni vihreä astia on sitä varten.`,
-        `Ahaa, okei. No mitä nää muut astiat on?`,
-        `Tää iso astia on pahvipakkauksille ja toi oranssi astia on energiajätteelle.`,
-        `Loput roskat on sekajätettä.`,
-        `Ne voi laittaa tähän.`,
-        `Mitä sekajäte oikein on?`,
-        `No kaikki sellainen jäte, jota ei voi kierrättää, on sekajätettä.`,
-        `Se päätyy suoraan kaatopaikalle.`,
-        `Aijaa.`,
-        `Tänne toiseen kaappiin me kerätään kaikki pullot ja lasipurkit.`,
-        `Pullot me palautetaan kauppaan, koska niistä saa pantin.`,
-        `Lasipurkit me viedään lasinkeräykseen.`,
-        `Tuolla pihalla on iso jätekatos.`,
-        `Kaikki jätteet voi viedä sinne.`,
-        `Ohhoh, kuulostaa aika hankalalta, mut kiitti neuvoista.`,
-        `Sähkölaskumme kasvaa jatkuvasti.`,
-        `Vanha pakastin kuluttaa huomattavasti enemmän energiaa kuin uusi.`,
-        `Olisi hyvä tarkistaa, että ikkunanne ovat tiiviit – erityisesti, jos asutte vanhassa talossa.`,
-        `Toivottavasti seuraava sähkölaskunne on jo pienempi!`,
-        `Vettä säästyisi, jos vähentäisitte kylpyammeessa kylpemistä ja kävisitte sen sijaan useammin suihkussa.`,
-        `Tässä muutamia vinkkejä.`,
-        `Teidän kannattaisi lisäksi tarkistaa kodinkoneidenne ikä.`,
-        `Pesukone kannattaa käynnistää vasta kun se on täynnä.`,
-        `Lopuksi vielä yksi helppo vinkki.`,
-        `Haluaisitko tulla käymään meidän mökillä joskus?`,
-        `Joo, tulisin tosi mielelläni!`,
-        `En olisi uskonut, että Emma voittaa!`,
-        `Etkö? Hän olisi voinut voittaa jo viime vuonna, jos olisi osallistunut.`,
-        `Menisitkö uimaan, jos vesi olisi lämmintä?`,
-        `Jos voittaisin lotossa, matkustaisin Australiaan.`,
-        `Ottaisin kupin kahvia.`,
-        `Sanoisitko nimesi?`,
-        `Menisimmekö lomalla Portugaliin?`,
-        `Olisipa jo loma!`,
-        `Kunpa huomenna ei sataisi!`,
-        `Gepardi on nopea eläin.`,
-        `Gepardi juoksee nopeasti.`,
-        `Anna on kaunis.`,
-        `Anna laulaa kauniisti.`,
-        `Joku voisi ajatella, että ympäristöystävällisesti eläminen on hankalaa ja aikaa vievää.`,
-        `Näin ei kuitenkaan ole!`,
-        `Tässä joitakin vinkkejä, joilla voit helposti aloittaa uuden kestävän elämäntavan.`,
-        `Voit aloittaa vähentämällä mainospostia.`,
-        `Laita postiluukkuun lappu, jossa lukee 'Ei mainoksia', niin turhan paperin määrä vähenee heti.`,
-        `Pian huomaat, että sinun ei enää tarvitse kantaa niin paljon paperiroskaa roskikseen.`,
-        `Pidä aina mukanasi vähintään yksi kangaskassi, jotta et ostaisi kaupasta muovikassia joka kerta.`,
-        `Jos käyt kaupassa kolme kertaa viikossa, ostat vuodessa jopa 150 muovikassia!`,
-        `Jos et ostaisi niitä, säästäisit vuodessa hyvän ravintola-aterian hinnan!`,
-        `Tavallinen suomalainen neljän hengen perhe heittää noin 70 kg ruokaa roskiin vuodessa.`,
-        `Se on todella paljon.`,
-        `Voit kuitenkin tehdä monta asiaa, jotta ruoka menisi suuhun eikä roskikseen.`,
-        `On tärkeää, että et osta liian paljon ruokaa.`,
-        `Ennen kuin lähdet kauppaan, katso, mitä ruokaa jääkaapissa jo on.`,
-        `Suunnittele sitten, mitä ruokaa voit tehdä.`,
-        `Kirjoita ostoslista, niin ostat vähemmän.`,
-        `Älä mene nälkäisenä kauppaan – silloin ostat helposti paljon kaikenlaista.`,
-        `Jos haluat vaihtelua, sinun ei heti tarvitse ostaa uusia huonekaluja tai remontoida koko asuntoa.`,
-        `Voit kokeilla, miltä huoneet näyttävät, jos siirrät huonekalut uuteen paikkaan.`,
-        `Voit myös vaihtaa vain verhot.`,
-        `Jos osaat ommella, voit tehdä vanhoista verhoista uudet tyynyt mökille.`,
-        `Ennen kuin ostat uuden huonekalun kaupasta, käy katsomassa, mitä voit löytää kirpputorilta tai internet-huutokaupasta.`,
-        `Kun ostat uutta, osta kestävää!`,
-        `Yritä myös vähentää autoilua.`,
-        `Jos asut kaupungissa, opettele käyttämään julkista liikennettä, kävele lyhyet matkat tai ota pyörä käyttöön.`,
-        `Ensin voi olla vaikeaa jättää auto pihaan, mutta bussiin, pyöräilyyn ja kävelyyn tottuu nopeasti, ja ulkona liikkuminen on sekä hauskaa että terveellistä.`,
-        `Lisää vinkkejä saat kotisivuiltamme internetistä.`,
-        `Onnea matkaan ja hyvää kestävää elämää sinulle!`,
-        `Mitä tää paita maksaa?`,
-        `Kuka toi on?`,
-        `Onks tossa pullossa vettä?`,
-        `Mä en tunne tota miestä.`,
-        `Onks nää mansikat kotimaisia?`,
-        `Annaks mulle noi sakset?`,
-        `Mul on tänään vapaapäivä, mut maanantaina mä meen taas töihin.`,
-        `Mä luulin, et sä tuut vasta tiistaina!`,
-        `Voinks mä lainata sun puhelinta, ku mun oma jäi kotiin?`,
-        `Käydään ensin syömässä ja mennään sit leffaan.`,
-        `Mä en kyl haluu jäädä yksin kotiin!`,
-        `Mä olin tänään kurssilla, vaik mulla oli kuumetta.`,
-        `Mitä Uitöt tällä hetkellä tekevät, jotta he suojelisivat ympäristöä?`,
-        `Miksi Olga Uitto kirjoittaa Kuluttaja-lehteen?`,
-        `Mitä pitäisi tehdä, kun lähtee pois huoneesta?`,
-        `Miten Uitot voisivat pienentää sähkölaskua 5 %?`,
-        `Miksi vanhat kodinkoneet eivät ole ympäristöystävällisiä?`,
-        `Miksi on parempi käydä suihkussa kuin kylvyssä?`,
-        `Mitä talvella kannattaa tehdä, jotta energiaa säästyy?`,
-        `Kyllä on kylmä ilma ja bussi on taas myöhässä.`,
-        `Minulla on kamala flunssa ja huomenna alkaa loma.`,
-        `Tämä oli todella rankka viikko: paljon töitä ja vähän unta.`,
-        `Meillä on huomenna pihajuhlat.`,
-        `Grillaamme ulkona koko illan.`,
-        `En halua enää viettää iltoja yksin kotona.`,
-        `Miksi minun aina täytyy tehdä kaikki kotityöt yksin?`,
-        `Mitä tekisit, jos olisit kaupan kassalla ja huomaisit, että sinulla ei ole rahaa mukana?`,
-        `Mitä tekisit, jos löytäisit 100 euroa kadulta?`,
-        `Mitä tekisit, jos näkisit, että joku varastaa suklaapatukan kaupasta?`,
-        `Mitä tekisit, jos naapurisi soittaisi musiikkia niin kovaa, että se häiritsee sinua?`,
-        `Mitä tekisit, jos joku soittaisi ovikelloasi keskellä yötä?`,
-        `Mitä tekisit, jos unohtaisit sateenvarjosi bussiin?`,
-        `Mitä tekisit, jos lihoisit kuukaudessa 10 kg?`,
-        `Kierrättäisin muovipakkauksetkin, jos talossani olisi energiajäteastia.`,
-        `Lainaisin naapurille kanamunia, jos minulla olisi niitä.`,
-        `Jos meillä ei olisi omaa autoa, matkustaisimme Imatralle sukulaisten luo junalla.`,
-        `Söisitkö hernekeittoa, jos siinä ei olisi lihaa?`,
-        `Jos lähikauppa aukeaisi jo seitsemältä, kävisin kaupassa ennen töihin menemistä.`,
-        `Ystäväni tapaisivat sinut mielellään, jos vain pääsisit tulemaan mukaan.`,
-        `Lähtisittekö ulos, jos ei sataisi?`,
+        [
+          `Diego on muuttanut opiskelija-asuntoon Junatielle.`,
+          `Asunto on soluasunto, jossa asuu Diegon lisäksi neljä muuta opiskelijaa.`,
+          `Diego ihmettelee, miksi keittiön kaapissa on neljä erilaista jäteastiaa.`,
+          `Moi Siiri, voisiks sä auttaa mua?`,
+          `Mä en tiedä, mihin roskikseen nää banaaninkuoret pitää laittaa.`,
+          `Joo, totta kai.`,
+          `Banaaninkuoret on biojätettä.`,
+          `Toi pieni vihreä astia on sitä varten.`,
+          `Ahaa, okei. No mitä nää muut astiat on?`,
+          `Tää iso astia on pahvipakkauksille ja toi oranssi astia on energiajätteelle.`,
+          `Loput roskat on sekajätettä.`,
+          `Ne voi laittaa tähän.`,
+          `Mitä sekajäte oikein on?`,
+          `No kaikki sellainen jäte, jota ei voi kierrättää, on sekajätettä.`,
+          `Se päätyy suoraan kaatopaikalle.`,
+          `Aijaa.`,
+          `Tänne toiseen kaappiin me kerätään kaikki pullot ja lasipurkit.`,
+          `Pullot me palautetaan kauppaan, koska niistä saa pantin.`,
+          `Lasipurkit me viedään lasinkeräykseen.`,
+          `Tuolla pihalla on iso jätekatos.`,
+          `Kaikki jätteet voi viedä sinne.`,
+          `Ohhoh, kuulostaa aika hankalalta, mut kiitti neuvoista.`,
+          `Sähkölaskumme kasvaa jatkuvasti.`,
+          `Vanha pakastin kuluttaa huomattavasti enemmän energiaa kuin uusi.`,
+          `Olisi hyvä tarkistaa, että ikkunanne ovat tiiviit – erityisesti, jos asutte vanhassa talossa.`,
+          `Toivottavasti seuraava sähkölaskunne on jo pienempi!`,
+          `Vettä säästyisi, jos vähentäisitte kylpyammeessa kylpemistä ja kävisitte sen sijaan useammin suihkussa.`,
+          `Tässä muutamia vinkkejä.`,
+          `Teidän kannattaisi lisäksi tarkistaa kodinkoneidenne ikä.`,
+          `Pesukone kannattaa käynnistää vasta kun se on täynnä.`,
+          `Lopuksi vielä yksi helppo vinkki.`,
+          `Haluaisitko tulla käymään meidän mökillä joskus?`,
+          `Joo, tulisin tosi mielelläni!`,
+          `En olisi uskonut, että Emma voittaa!`,
+          `Etkö? Hän olisi voinut voittaa jo viime vuonna, jos olisi osallistunut.`,
+          `Menisitkö uimaan, jos vesi olisi lämmintä?`,
+          `Jos voittaisin lotossa, matkustaisin Australiaan.`,
+          `Ottaisin kupin kahvia.`,
+          `Sanoisitko nimesi?`,
+          `Menisimmekö lomalla Portugaliin?`,
+          `Olisipa jo loma!`,
+          `Kunpa huomenna ei sataisi!`,
+          `Gepardi on nopea eläin.`,
+          `Gepardi juoksee nopeasti.`,
+          `Anna on kaunis.`,
+          `Anna laulaa kauniisti.`,
+          `Joku voisi ajatella, että ympäristöystävällisesti eläminen on hankalaa ja aikaa vievää.`,
+          `Näin ei kuitenkaan ole!`,
+          `Tässä joitakin vinkkejä, joilla voit helposti aloittaa uuden kestävän elämäntavan.`,
+          `Voit aloittaa vähentämällä mainospostia.`,
+        ],
+
+        [
+          `Laita postiluukkuun lappu, jossa lukee 'Ei mainoksia', niin turhan paperin määrä vähenee heti.`,
+          `Pian huomaat, että sinun ei enää tarvitse kantaa niin paljon paperiroskaa roskikseen.`,
+          `Pidä aina mukanasi vähintään yksi kangaskassi, jotta et ostaisi kaupasta muovikassia joka kerta.`,
+          `Jos käyt kaupassa kolme kertaa viikossa, ostat vuodessa jopa 150 muovikassia!`,
+          `Jos et ostaisi niitä, säästäisit vuodessa hyvän ravintola-aterian hinnan!`,
+          `Tavallinen suomalainen neljän hengen perhe heittää noin 70 kg ruokaa roskiin vuodessa.`,
+          `Se on todella paljon.`,
+          `Voit kuitenkin tehdä monta asiaa, jotta ruoka menisi suuhun eikä roskikseen.`,
+          `On tärkeää, että et osta liian paljon ruokaa.`,
+          `Ennen kuin lähdet kauppaan, katso, mitä ruokaa jääkaapissa jo on.`,
+          `Suunnittele sitten, mitä ruokaa voit tehdä.`,
+          `Kirjoita ostoslista, niin ostat vähemmän.`,
+          `Älä mene nälkäisenä kauppaan – silloin ostat helposti paljon kaikenlaista.`,
+          `Jos haluat vaihtelua, sinun ei heti tarvitse ostaa uusia huonekaluja tai remontoida koko asuntoa.`,
+          `Voit kokeilla, miltä huoneet näyttävät, jos siirrät huonekalut uuteen paikkaan.`,
+          `Voit myös vaihtaa vain verhot.`,
+          `Jos osaat ommella, voit tehdä vanhoista verhoista uudet tyynyt mökille.`,
+          `Ennen kuin ostat uuden huonekalun kaupasta, käy katsomassa, mitä voit löytää kirpputorilta tai internet-huutokaupasta.`,
+          `Kun ostat uutta, osta kestävää!`,
+          `Yritä myös vähentää autoilua.`,
+          `Jos asut kaupungissa, opettele käyttämään julkista liikennettä, kävele lyhyet matkat tai ota pyörä käyttöön.`,
+          `Ensin voi olla vaikeaa jättää auto pihaan, mutta bussiin, pyöräilyyn ja kävelyyn tottuu nopeasti, ja ulkona liikkuminen on sekä hauskaa että terveellistä.`,
+          `Lisää vinkkejä saat kotisivuiltamme internetistä.`,
+          `Onnea matkaan ja hyvää kestävää elämää sinulle!`,
+          `Mitä tää paita maksaa?`,
+          `Kuka toi on?`,
+          `Onks tossa pullossa vettä?`,
+          `Mä en tunne tota miestä.`,
+          `Onks nää mansikat kotimaisia?`,
+          `Annaks mulle noi sakset?`,
+          `Mul on tänään vapaapäivä, mut maanantaina mä meen taas töihin.`,
+          `Mä luulin, et sä tuut vasta tiistaina!`,
+          `Voinks mä lainata sun puhelinta, ku mun oma jäi kotiin?`,
+          `Käydään ensin syömässä ja mennään sit leffaan.`,
+          `Mä en kyl haluu jäädä yksin kotiin!`,
+          `Mä olin tänään kurssilla, vaik mulla oli kuumetta.`,
+          `Mitä Uitöt tällä hetkellä tekevät, jotta he suojelisivat ympäristöä?`,
+          `Miksi Olga Uitto kirjoittaa Kuluttaja-lehteen?`,
+          `Mitä pitäisi tehdä, kun lähtee pois huoneesta?`,
+          `Miten Uitot voisivat pienentää sähkölaskua 5 %?`,
+          `Miksi vanhat kodinkoneet eivät ole ympäristöystävällisiä?`,
+          `Miksi on parempi käydä suihkussa kuin kylvyssä?`,
+          `Mitä talvella kannattaa tehdä, jotta energiaa säästyy?`,
+          `Kyllä on kylmä ilma ja bussi on taas myöhässä.`,
+          `Minulla on kamala flunssa ja huomenna alkaa loma.`,
+          `Tämä oli todella rankka viikko: paljon töitä ja vähän unta.`,
+          `Meillä on huomenna pihajuhlat.`,
+          `Grillaamme ulkona koko illan.`,
+          `En halua enää viettää iltoja yksin kotona.`,
+          `Miksi minun aina täytyy tehdä kaikki kotityöt yksin?`,
+          `Mitä tekisit, jos olisit kaupan kassalla ja huomaisit, että sinulla ei ole rahaa mukana?`,
+          `Mitä tekisit, jos löytäisit 100 euroa kadulta?`,
+          `Mitä tekisit, jos näkisit, että joku varastaa suklaapatukan kaupasta?`,
+          `Mitä tekisit, jos naapurisi soittaisi musiikkia niin kovaa, että se häiritsee sinua?`,
+          `Mitä tekisit, jos joku soittaisi ovikelloasi keskellä yötä?`,
+          `Mitä tekisit, jos unohtaisit sateenvarjosi bussiin?`,
+          `Mitä tekisit, jos lihoisit kuukaudessa 10 kg?`,
+          `Kierrättäisin muovipakkauksetkin, jos talossani olisi energiajäteastia.`,
+          `Lainaisin naapurille kanamunia, jos minulla olisi niitä.`,
+          `Jos meillä ei olisi omaa autoa, matkustaisimme Imatralle sukulaisten luo junalla.`,
+          `Söisitkö hernekeittoa, jos siinä ei olisi lihaa?`,
+          `Jos lähikauppa aukeaisi jo seitsemältä, kävisin kaupassa ennen töihin menemistä.`,
+          `Ystäväni tapaisivat sinut mielellään, jos vain pääsisit tulemaan mukaan.`,
+          `Lähtisittekö ulos, jos ei sataisi?`,
+        ],
       ],
 
       engSentences: [
-        `Diego has moved into a student apartment on Junatie.`,
-        `The apartment is a cell apartment where four other students live in addition to Diego.`,
-        `Diego is wondering why there are four different bins in the kitchen cabinet.`,
-        `Hi Siiri, can you help me?`,
-        `I don't know which bin to put the banana peels in.`,
-        `Yes of course.`,
-        `Banana peels are biowaste.`,
-        `That little green container is for that.`,
-        `Ahaa, okay. Well what are these other dishes?`,
-        `This big container is for cardboard packaging and that orange container is for energy waste.`,
-        `The rest of the rubbish is mixed waste.`,
-        `They can be put here.`,
-        `What exactly is mixed waste?`,
-        `Well, all the kind of waste that can’t be recycled is mixed waste.`,
-        `It ends up in landfill.`,
-        `Oh right.`,
-        `We collect all the bottles and glass jars in this other cupboard.`,
-        `We return the bottles to the shop, because they get a deposit.`,
-        `We take the glass jars to the glass recycling.`,
-        `There is a big trash container in that yard.`,
-        `All the waste can be taken there.`,
-        `Oho, sounds quite awkward, but thanks for the tips.`,
-        `Our electricity bill is constantly growing.`,
-        `An old freezer consumes significantly more energy than a new one.`,
-        `It would be good to check if your windows are sealed – especially if you live in an old house.`,
-        `Hopefully your next electricity bill will already be smaller!`,
-        `You would save water if you bathed less in the bathtub and took a shower more often instead.`,
-        `Here are a few tips.`,
-        `You should also check the age of your appliances.`,
-        `The washing machine should only be started when it is full.`,
-        `Finally, one more easy tip.`,
-        `Would you like to come to our summer cottage sometime?`,
-        `Yeah, I'd love to come!`,
-        `I wouldn't have thought Emma would win!`,
-        `Don't you? She could have won last year if she had participated.`,
-        `Would you go swimming if the water was warm?`,
-        `If I won the lottery, I would travel to Australia.`,
-        `I'd like a cup of coffee.`,
-        `Would you say your name?`,
-        `Would we go on holiday to Portugal?`,
-        `Have a vacation already!`,
-        `I wish it wouldn't rain tomorrow!`,
-        `The cheetah is a fast animal.`,
-        `The cheetah runs fast.`,
-        `Anna is beautiful.`,
-        `Anna sings beautifully.`,
-        `One might think that living in an environmentally friendly way is difficult and time consuming.`,
-        `However, this is not the case!`,
-        `Here are some tips to help you easily start a new sustainable lifestyle.`,
-        `To get started, reduce your promotional mail.`,
-        `Put a note in the mailbox that says 'No Ads' to reduce the amount of unnecessary paper immediately.`,
-        `You will soon find that you no longer have to carry so much paper waste in your trash.`,
-        `Always keep at least one canvas bag with you so you don't buy a plastic bag from the store every time.`,
-        `If you go to the store three times a week, you will buy up to 150 plastic bags a year!`,
-        `If you didn't buy them, you would save in a year a good restaurant meal!`,
-        `An ordinary Finnish family of four throws about 70 kg of food in the rubbish a year.`,
-        `That's really a lot.`,
-        `However, there are many things you can do to keep food in your mouth and not in the trash.`,
-        `It is important that you do not buy too much food.`,
-        `Before you go shopping, see what food is already in the fridge.`,
-        `Then plan what food you can make.`,
-        `Write a shopping list so you buy less.`,
-        `Don't go hungry to shop - then you'll easily buy a lot of everything.`,
-        `If you want variation, you don't have to buy new furniture or renovate an entire apartment right away.`,
-        `You can try what the rooms will look like if you move the furniture to a new location.`,
-        `You can also change only the curtains.`,
-        `If you know how to sew, you can make old curtains into new pillows for the cottage.`,
-        `Before you buy new furniture from a store, take a look at what you can find at a flea market or online auction.`,
-        `When you buy new, buy sustainable!`,
-        `Also try to reduce driving.`,
-        `If you live in the city, learn to use public transport, walk short distances or use a bike.`,
-        `At first, it can be hard to leave your car in the yard, but getting used to the bus, biking, and walking is quick, and getting around is both fun and healthy.`,
-        `You can find more tips on our website.`,
-        `Good luck on your journey and a good sustainable life for you!`,
-        `What does this shirt cost?`,
-        `Who is that?`,
-        `Is there a bottle of water over there?`,
-        `I don't know the real man.`,
-        `Are these strawberries domestic?`,
-        `Would you give me those scissors?`,
-        `I have a day off today, but I'm going to work again on Monday.`,
-        `I thought you weren't coming until Tuesday!`,
-        `Can I borrow your phone as I left my own at home?`,
-        `Let's go eat first and then go to the movies.`,
-        `I don't want to be left home alone!`,
-        `I was on a course today, even though I had a fever.`,
-        `What are the Uitos currently doing to protect the environment?`,
-        `Why does Olga Uitto write to the consumer magazine?`,
-        `What should I do when leaving the room?`,
-        `How could the Uitos do to reduce their electricity bill by 5%?`,
-        `Why aren't old appliances environmentally friendly?`,
-        `Why is it better to take a shower than a bath?`,
-        `What should you do in the winter to save energy?`,
-        `Yes it is cold and the bus is late again.`,
-        `I have a horrible flu and the holidays are starting tomorrow.`,
-        `This was a really tough week: a lot of work and little sleep.`,
-        `We are having a garden party tomorrow.`,
-        `We are grilling outside all evening.`,
-        `I no longer want to spend evenings alone at home.`,
-        `Why do I always have to do all the housework alone?`,
-        `What would you do if you were at the checkout and realised you didn't have any money on you?`,
-        `What would you do if you found 100 euros on the street?`,
-        `What would you do if you saw someone steal a bar of chocolate from a store?`,
-        `What would you do if your neighbour played music so loud that it was bothering you?`,
-        `What would you do if someone rang your doorbell in the middle of the night?`,
-        `What would you do if you left your umbrella on the bus?`,
-        `What would you do if you put on 10kg in a month?`,
-        `I would also recycle plastic packaging, if I had an energy waste bin in my house.`,
-        `I would lend chicken eggs to a neighbour if I had them.`,
-        `If we didn’t have our own car, we would travel to Imatra to relatives by train.`,
-        `Would you eat pea soup without meat?`,
-        `If the convenience store opened at seven, I would go to the store before going to work.`,
-        `My friends would love to meet you if you would just come along.`,
-        `Would you go out if it wasn't raining?`,
+        [
+          `Diego has moved into a student apartment on Junatie.`,
+          `The apartment is a cell apartment where four other students live in addition to Diego.`,
+          `Diego is wondering why there are four different bins in the kitchen cabinet.`,
+          `Hi Siiri, can you help me?`,
+          `I don't know which bin to put the banana peels in.`,
+          `Yes of course.`,
+          `Banana peels are biowaste.`,
+          `That little green container is for that.`,
+          `Ahaa, okay. Well what are these other dishes?`,
+          `This big container is for cardboard packaging and that orange container is for energy waste.`,
+          `The rest of the rubbish is mixed waste.`,
+          `They can be put here.`,
+          `What exactly is mixed waste?`,
+          `Well, all the kind of waste that can’t be recycled is mixed waste.`,
+          `It ends up in landfill.`,
+          `Oh right.`,
+          `We collect all the bottles and glass jars in this other cupboard.`,
+          `We return the bottles to the shop, because they get a deposit.`,
+          `We take the glass jars to the glass recycling.`,
+          `There is a big trash container in that yard.`,
+          `All the waste can be taken there.`,
+          `Oho, sounds quite awkward, but thanks for the tips.`,
+          `Our electricity bill is constantly growing.`,
+          `An old freezer consumes significantly more energy than a new one.`,
+          `It would be good to check if your windows are sealed – especially if you live in an old house.`,
+          `Hopefully your next electricity bill will already be smaller!`,
+          `You would save water if you bathed less in the bathtub and took a shower more often instead.`,
+          `Here are a few tips.`,
+          `You should also check the age of your appliances.`,
+          `The washing machine should only be started when it is full.`,
+          `Finally, one more easy tip.`,
+          `Would you like to come to our summer cottage sometime?`,
+          `Yeah, I'd love to come!`,
+          `I wouldn't have thought Emma would win!`,
+          `Don't you? She could have won last year if she had participated.`,
+          `Would you go swimming if the water was warm?`,
+          `If I won the lottery, I would travel to Australia.`,
+          `I'd like a cup of coffee.`,
+          `Would you say your name?`,
+          `Would we go on holiday to Portugal?`,
+          `Have a vacation already!`,
+          `I wish it wouldn't rain tomorrow!`,
+          `The cheetah is a fast animal.`,
+          `The cheetah runs fast.`,
+          `Anna is beautiful.`,
+          `Anna sings beautifully.`,
+          `One might think that living in an environmentally friendly way is difficult and time consuming.`,
+          `However, this is not the case!`,
+          `Here are some tips to help you easily start a new sustainable lifestyle.`,
+          `To get started, reduce your promotional mail.`,
+        ],
+
+        [
+          `Put a note in the mailbox that says 'No Ads' to reduce the amount of unnecessary paper immediately.`,
+          `You will soon find that you no longer have to carry so much paper waste in your trash.`,
+          `Always keep at least one canvas bag with you so you don't buy a plastic bag from the store every time.`,
+          `If you go to the store three times a week, you will buy up to 150 plastic bags a year!`,
+          `If you didn't buy them, you would save in a year a good restaurant meal!`,
+          `An ordinary Finnish family of four throws about 70 kg of food in the rubbish a year.`,
+          `That's really a lot.`,
+          `However, there are many things you can do to keep food in your mouth and not in the trash.`,
+          `It is important that you do not buy too much food.`,
+          `Before you go shopping, see what food is already in the fridge.`,
+          `Then plan what food you can make.`,
+          `Write a shopping list so you buy less.`,
+          `Don't go hungry to shop - then you'll easily buy a lot of everything.`,
+          `If you want variation, you don't have to buy new furniture or renovate an entire apartment right away.`,
+          `You can try what the rooms will look like if you move the furniture to a new location.`,
+          `You can also change only the curtains.`,
+          `If you know how to sew, you can make old curtains into new pillows for the cottage.`,
+          `Before you buy new furniture from a store, take a look at what you can find at a flea market or online auction.`,
+          `When you buy new, buy sustainable!`,
+          `Also try to reduce driving.`,
+          `If you live in the city, learn to use public transport, walk short distances or use a bike.`,
+          `At first, it can be hard to leave your car in the yard, but getting used to the bus, biking, and walking is quick, and getting around is both fun and healthy.`,
+          `You can find more tips on our website.`,
+          `Good luck on your journey and a good sustainable life for you!`,
+          `What does this shirt cost?`,
+          `Who is that?`,
+          `Is there a bottle of water over there?`,
+          `I don't know the real man.`,
+          `Are these strawberries domestic?`,
+          `Would you give me those scissors?`,
+          `I have a day off today, but I'm going to work again on Monday.`,
+          `I thought you weren't coming until Tuesday!`,
+          `Can I borrow your phone as I left my own at home?`,
+          `Let's go eat first and then go to the movies.`,
+          `I don't want to be left home alone!`,
+          `I was on a course today, even though I had a fever.`,
+          `What are the Uitos currently doing to protect the environment?`,
+          `Why does Olga Uitto write to the consumer magazine?`,
+          `What should I do when leaving the room?`,
+          `How could the Uitos do to reduce their electricity bill by 5%?`,
+          `Why aren't old appliances environmentally friendly?`,
+          `Why is it better to take a shower than a bath?`,
+          `What should you do in the winter to save energy?`,
+          `Yes it is cold and the bus is late again.`,
+          `I have a horrible flu and the holidays are starting tomorrow.`,
+          `This was a really tough week: a lot of work and little sleep.`,
+          `We are having a garden party tomorrow.`,
+          `We are grilling outside all evening.`,
+          `I no longer want to spend evenings alone at home.`,
+          `Why do I always have to do all the housework alone?`,
+          `What would you do if you were at the checkout and realised you didn't have any money on you?`,
+          `What would you do if you found 100 euros on the street?`,
+          `What would you do if you saw someone steal a bar of chocolate from a store?`,
+          `What would you do if your neighbour played music so loud that it was bothering you?`,
+          `What would you do if someone rang your doorbell in the middle of the night?`,
+          `What would you do if you left your umbrella on the bus?`,
+          `What would you do if you put on 10kg in a month?`,
+          `I would also recycle plastic packaging, if I had an energy waste bin in my house.`,
+          `I would lend chicken eggs to a neighbour if I had them.`,
+          `If we didn’t have our own car, we would travel to Imatra to relatives by train.`,
+          `Would you eat pea soup without meat?`,
+          `If the convenience store opened at seven, I would go to the store before going to work.`,
+          `My friends would love to meet you if you would just come along.`,
+          `Would you go out if it wasn't raining?`,
+        ],
       ],
 
+      // #mark - alpine state
       get blanks() {
-        return this.finSentences[this.sentenceI].split(' ')
+        return this.finSentences[this.sentenceSetI][this.sentenceI].split(' ')
           .map(word => word.split('')
           .map(letter => '_').join(''))
       },
 
       get hints() {
-        return this.finSentences[this.sentenceI].split(' ')
+        return this.finSentences[this.sentenceSetI][this.sentenceI].split(' ')
           .map(word => word.split('')
           .map((letter, i) => i == 0 ? letter : '_').join(''))
       },
 
       get words() {
-        return this.finSentences[this.sentenceI].split(' ')
+        return this.finSentences[this.sentenceSetI][this.sentenceI].split(' ')
       },
 
       setUpWordStatusRegister: function() {
-        this.wordStatusRegister = this.finSentences
+        this.wordStatusRegister = this.finSentences[this.sentenceSetI]
           .map(sentence => sentence
             .split(' ')
             .map(word => false)
@@ -287,9 +293,10 @@
       },
 
       get sentenceCount() {
-        return this.finSentences.length
+        return this.finSentences[this.sentenceSetI].length
       },
 
+      sentenceSetI: 1,
       sentenceI: 0,
       wordI: 0,
       wordStatusRegister: [],
@@ -297,10 +304,45 @@
 
       changeSentence: function(change) {
         this.wordI = 0
-        if (change == 'next' && this.sentenceI < this.finSentences.length - 1) {
-          this.sentenceI++
-        } else if (change == 'previous' && this.sentenceI > 0) {
+        lowestI = 0
+        highestI = this.finSentences[this.sentenceSetI].length - 1
+        if (change == 'back 10') {
+          this.goBack10()
+        } else if (change == 'back 1') {
+          this.goBack1()
+        } else if (change == 'forward 1') {
+          this.goForward1()
+        } else if (change == 'forward 10') {
+          this.goForward10()
+        }
+      },
+
+      goBack10: function() {
+        if (this.sentenceI >= 10) {
+          this.sentenceI = this.sentenceI - 10
+        } else {
+          this.sentenceI = 0
+        }
+      },
+
+      goBack1: function() {
+        if (this.sentenceI > 0) {
           this.sentenceI--
+        }
+      },
+
+      goForward1: function() {
+        if (this.sentenceI < this.finSentences[this.sentenceSetI].length - 1) {
+          this.sentenceI++
+        }
+      },
+
+      goForward10: function() {
+        lastI = this.finSentences[this.sentenceSetI].length - 1
+        if (this.sentenceI < lastI - 10) {
+          this.sentenceI = this.sentenceI + 10
+        } else {
+          this.sentenceI = lastI
         }
       },
 
@@ -315,14 +357,23 @@
           } else {
             sentenceStatus = 'learning'
           }
-          register[i] = sentenceStatus
+          register[i] = {
+            value: sentenceStatus,
+            index: i,
+          }
         }
         return register
       },
 
+      get tenSentenceRegister() {
+        startI = this.sentenceI - (this.sentenceI % 10)
+        endI = startI + 9
+        return this.sentenceStatusRegister.filter((s) => s.index >= startI && s.index <= endI)
+      },
+
       get progress() {
         return Math.round((this.sentenceStatusRegister
-          .filter(status => status === 'learnt').length / this.sentenceStatusRegister.length) * 100)
+          .filter(s => s.value === 'learnt').length / this.sentenceStatusRegister.length) * 100)
       },
 
       get allWordsAreShown() {
@@ -383,19 +434,16 @@
       },
     }"
   >
-    <div
-      class="grid gap-8 lg:gap-16 pb-5"
-      style="grid-template-rows: auto 1fr auto; height: 100%"
-    >
+    <div class="flex flex-col h-full">
       <!-- ................................................... -->
-      <!-- Top bar -->
+      <!-- #mark - Top bar -->
       <!-- ................................................... -->
 
       <div
-        class="grid px-6 py-1 bg-blue-200 gap-4"
-        style="grid-template-columns: 1fr auto auto"
+        class="grid mb-6 px-4 py-1 bg-blue-200 gap-4"
+        style="grid-template-columns: 1fr auto"
       >
-        <h1 class="text-2xl">Langapp</h1>
+        <h1>Langapp</h1>
         <button
           x-text="
             showHelpStatus == 'none'
@@ -404,7 +452,7 @@
             ? 'Show shortcuts'
             : 'Hide shortcuts'
           "
-          class="underline"
+          class="underline text-xs"
           @click="
             showHelpStatus == 'none'
             ? showHelpStatus = 'instructionsShowing'
@@ -415,55 +463,84 @@
         ></button>
       </div>
 
+      <!-- Progress percentage indicator -->
+      <!-- <div
+        class="ml-auto text-center rounded-md mx-2 px-3 py-1"
+        :class="
+                progress < 10
+                  ? 'bg-red-300'
+                  : progress < 20
+                  ? 'bg-red-200'
+                  : progress < 30
+                  ? 'bg-red-100'
+                  : progress < 40
+                  ? 'bg-yellow-100'
+                  : progress < 50
+                  ? 'bg-yellow-200'
+                  : progress < 60
+                  ? 'bg-yellow-300'
+                  : progress < 70
+                  ? 'bg-yellow-400'
+                  : progress < 80
+                  ? 'bg-green-100'
+                  : progress < 90
+                  ? 'bg-green-200'
+                  : 'bg-green-300'
+                "
+      >
+        <span x-text="progress" class="pr-1"></span>
+        <span>%</span>
+      </div> -->
+
       <!-- ................................................... -->
-      <!-- Sentences and optional instructions -->
+      <!-- #mark - Main section 1: Sentences and optional instructions -->
       <!-- ................................................... -->
 
       <div
-        class="pt-20 justify-self-center"
+        class="mx-auto flex-grow overflow-auto"
         :class="(showHelpStatus == 'instructionsShowing' || showHelpStatus == 'shortcutsShowing') && 'grid gap-8 lg:gap-20'"
-        style="grid-template-columns: 1fr auto; width: min(120rem, 85vw)"
+        style="grid-template-columns: 1fr auto; width: min(120rem, 92vw)"
       >
         <!-- ................................................... -->
         <!-- Sentence in English and Finnish -->
         <!-- ................................................... -->
 
-        <div class="text-lg sm:text-2xl lg:text-4xl xl:text-5xl">
+        <div class="lg:text-4xl xl:text-5xl">
           <!-- ................................................... -->
           <!-- English sentence -->
           <!-- ................................................... -->
 
           <p
-            x-text="engSentences[sentenceI]"
-            class="mb-16 leading-normal font-mono"
+            x-text="engSentences[sentenceSetI][sentenceI]"
+            class="mb-5 leading-5"
           ></p>
-          <hr class="mb-12" />
+          <hr class="mb-4" />
 
           <!-- ................................................... -->
           <!-- Finnish sentence -->
           <!-- ................................................... -->
 
-          <div class="leading-loose font-mono">
+          <div class="font-mono leading-8 mb-6">
             <template x-for="(word, i) in words">
               <span @click="toggleWord(i)">
                 <span
                   x-show="!wordStatusRegister[sentenceI][i] && !hintsAreShown"
                   x-text="blanks[i]"
-                  class="cursor-pointer rounded-lg text-gray-600 py-2 bg-red-100 hover:bg-red-200"
-                  :class="i === wordI && 'border-b-4 border-blue-300'"
+                  class="cursor-pointer rounded-lg text-gray-600 py-1 bg-red-100 hover:bg-red-200"
+                  :class="i === wordI && 'border-b-2 border-blue-300'"
                 ></span>
                 <span
                   x-show="!wordStatusRegister[sentenceI][i] && hintsAreShown"
                   x-text="hints[i]"
-                  class="cursor-pointer rounded-md text-gray-600 py-2 bg-red-100 hover:bg-red-200"
-                  :class="i === wordI && 'border-b-4 border-blue-300'"
-                  :class="i === wordI && 'border-b-4 border-blue-300'"
+                  class="cursor-pointer rounded-md text-gray-600 py-1 bg-red-100 hover:bg-red-200"
+                  :class="i === wordI && 'border-b-2 border-blue-300'"
+                  :class="i === wordI && 'border-b-2 border-blue-300'"
                 ></span>
                 <span
                   x-show="wordStatusRegister[sentenceI][i]"
                   x-text="word"
-                  class="cursor-pointer py-2 hover:bg-gray-200 rounded-lg"
-                  :class="i === wordI && 'border-b-4 border-blue-300'"
+                  class="cursor-pointer py-1 hover:bg-gray-200 rounded-lg"
+                  :class="i === wordI && 'border-b-2 border-blue-300'"
                 ></span>
               </span>
             </template>
@@ -547,150 +624,132 @@
         </div>
       </div>
 
-      <div class="mx-auto" style="width: min(120rem, 85vw)">
-        <!-- ................................................... -->
+      <!-- ................................................... -->
+      <!-- #mark Main section 2: Control buttons, sentence and progress info -->
+      <!-- ................................................... -->
+
+      <div class="mx-auto" style="width: min(120rem, 92vw)">
         <!-- Sentence buttons section -->
-        <!-- ................................................... -->
         <div
           class="text-xs lg:text-lg text-center mb-0 lg:mb-6 lg:grid lg:justify-between lg:items-center"
-          style="grid-template-columns: 1fr auto 1fr"
         >
-          <!-- ................................................... -->
-          <!-- Sentence info, eg 1/93 -->
-          <!-- ................................................... -->
-
-          <div
-            class="text-center rounded-md px-8 mr-4 pb-1 mr-auto"
-            :class="
-                sentenceStatusRegister[sentenceI] === 'tolearn'
-                  ? 'bg-red-300'
-                  : sentenceStatusRegister[sentenceI] === 'learning'
-                  ? 'bg-yellow-300'
-                  : 'bg-green-300'
-                "
-          >
-            <span class="block text-base -mb-1">Sentence</span>
-            <div class="text-4xl">
-              <span x-text="sentenceI + 1"></span>
-              <span>/</span>
-              <span x-text="sentenceCount"></span>
-            </div>
-          </div>
-
-          <!-- ................................................... -->
-          <!-- Sentence and navigation buttons -->
-          <!-- ................................................... -->
-
-          <div>
+          <!-- Current sentence control buttons -->
+          <div class="mb-2">
+            <!-- Toggle hints button -->
             <button
-              x-text="hintsAreShown ? 'Hide hints' : 'Show hints'"
+              x-text="hintsAreShown ? 'No hints' : 'Hints'"
               :class="allWordsAreShown ? 'pointer-events-none opacity-25' : ''"
-              class="px-3 lg:px-4 py-1 mx-2 border-2 rounded-md border-gray-300 hover:border-gray-400"
+              class="px-3 lg:px-4 py-1 mx-1 border-2 rounded-md border-gray-300 hover:border-gray-400"
               @click="toggleHints()"
             ></button>
 
+            <!-- Show three button -->
             <button
               :class="allWordsAreShown ? 'pointer-events-none opacity-25' : ''"
-              class="px-3 lg:px-4 py-1 mr-2 border-2 rounded-md border-gray-300 hover:border-gray-400"
+              class="px-3 lg:px-4 py-1 mx-1 border-2 rounded-md border-gray-300 hover:border-gray-400"
               @click="showNextThreeWords()"
             >
               Show three
             </button>
 
+            <!-- Toggle all button -->
             <button
-              x-text="allWordsAreShown ? 'Hide all' : 'Show all'"
-              class="px-3 lg:px-4 py-1 mx-2 lg:ml-0 border-2 rounded-md border-gray-300 hover:border-gray-400"
+              x-text="allWordsAreHidden ? 'Show all' : 'Hide all'"
+              class="px-3 lg:px-4 py-1 mx-1 lg:ml-0 border-2 rounded-md border-gray-300 hover:border-gray-400"
               @click="toggleSentence()"
             ></button>
-
-            <button
-              :class="sentenceI === 0 ? 'pointer-events-none opacity-25' : ''"
-              class="px-4 py-1 ml-6 border-2 rounded-md border-gray-300 hover:border-gray-400"
-              @click="changeSentence('previous')"
-            >
-              Prev
-            </button>
-
-            <button
-              :class="sentenceI === finSentences.length - 1 && 'pointer-events-none opacity-25'"
-              class="px-4 py-1 mx-2 border-2 rounded-md border-gray-300 hover:border-gray-400"
-              @click="changeSentence('next')"
-            >
-              Next
-            </button>
           </div>
 
-          <!-- ................................................... -->
-          <!-- Progress percentage indicator -->
-          <!-- ................................................... -->
+          <!-- #mark - Sentence navigation buttons and info -->
+          <div class="mb-2">
+            <!-- Go back 10 sentences button -->
+            <button
+              :class="sentenceI === 0 && 'pointer-events-none opacity-25'"
+              class="px-3 py-1 mr-1 border-2 rounded-md border-gray-300 hover:border-gray-400"
+              @click="changeSentence('back 10')"
+            >
+              <<
+            </button>
 
-          <div
-            class="ml-auto text-center rounded-md px-8 ml-4 pb-1"
-            :class="
-                progress < 10
+            <!-- Go to previous sentence button -->
+            <button
+              :class="sentenceI === 0 && 'pointer-events-none opacity-25'"
+              class="px-3 py-1 mx-1 border-2 rounded-md border-gray-300 hover:border-gray-400"
+              @click="changeSentence('back 1')"
+            >
+              <
+            </button>
+
+            <!-- Sentence info, eg 1/93 -->
+            <div
+              class="inline text-center rounded-md mx-2 px-3 py-1"
+              :class="
+                sentenceStatusRegister[sentenceI].value === 'tolearn'
                   ? 'bg-red-300'
-                  : progress < 20
-                  ? 'bg-red-200'
-                  : progress < 30
-                  ? 'bg-red-100'
-                  : progress < 40
-                  ? 'bg-yellow-100'
-                  : progress < 50
-                  ? 'bg-yellow-200'
-                  : progress < 60
+                  : sentenceStatusRegister[sentenceI].value === 'learning'
                   ? 'bg-yellow-300'
-                  : progress < 70
-                  ? 'bg-yellow-400'
-                  : progress < 80
-                  ? 'bg-green-100'
-                  : progress < 90
-                  ? 'bg-green-200'
                   : 'bg-green-300'
                 "
-          >
-            <span class="text-base block -mb-1">Progress</span>
-            <div class="flex items-center justify-center">
-              <span x-text="progress" class="text-4xl pr-1"></span>
-              <span class="text-2xl">%</span>
+            >
+              <span x-text="sentenceI + 1"></span>
+              <span>/</span>
+              <span x-text="sentenceCount"></span>
             </div>
+
+            <!-- Go to next sentence button -->
+            <button
+              :class="sentenceI === finSentences[sentenceSetI].length - 1 && 'pointer-events-none opacity-25'"
+              class="px-3 py-1 mx-1 border-2 rounded-md border-gray-300 hover:border-gray-400"
+              @click="changeSentence('forward 1')"
+            >
+              >
+            </button>
+
+            <!-- Go forward 10 sentences button -->
+            <button
+              :class="sentenceI === finSentences[sentenceSetI].length - 1 && 'pointer-events-none opacity-25'"
+              class="px-3 py-1 ml-1 border-2 rounded-md border-gray-300 hover:border-gray-400"
+              @click="changeSentence('forward 10')"
+            >
+              >>
+            </button>
           </div>
         </div>
 
-        <!-- ................................................... -->
-        <!-- Progress indicators section -->
-        <!-- ................................................... -->
-
-        <div style="width: min(120rem, 85vw);">
+        <!-- #mark - Progress marks and sentence links -->
+        <div style="width: min(120rem, 92vw)">
           <div
-            class="grid gap-2"
-            style="grid-template-columns: repeat(50, 1fr)"
+            class="grid gap-1 mb-2"
+            style="grid-template-columns: repeat(10, 1fr)"
           >
-            <template x-for="(sentenceStatus, i) in sentenceStatusRegister">
+            <template x-for="s in tenSentenceRegister">
               <span
-                @click="sentenceI = i"
-                class="text-sm text-center rounded-md cursor-pointer flex h-5 w-5 pb-1 items-center justify-center"
+                @click="sentenceI = s.index"
+                class="text-sm text-center rounded-md cursor-pointer flex h-6 w-6 items-center justify-center"
                 :class="
-                sentenceStatus === 'tolearn' && i === sentenceI
+                s.value === 'tolearn' && s.index === sentenceI
                   ? 'bg-red-800 font-bold text-white'
-                  : sentenceStatus === 'tolearn'
+                  : s.value === 'tolearn'
                   ? 'bg-red-100 hover:bg-red-300'
-                  : sentenceStatus === 'learning' && i === sentenceI
+                  : s.value === 'learning' && s.index === sentenceI
                   ? 'bg-yellow-600 font-bold text-white'
-                  : sentenceStatus === 'learning'
+                  : s.value === 'learning'
                   ? 'bg-yellow-100 hover:bg-yellow-300'
-                  : sentenceStatus === 'learnt' && i === sentenceI
+                  : s.value === 'learnt' && s.index === sentenceI
                   ? 'bg-green-800 font-bold text-white'
                   : 'bg-green-100 hover:bg-green-300'
                 "
               >
                 <span
                   x-text="
-                sentenceStatus === 'tolearn'
-                  ? '.'
-                  : sentenceStatus === 'learning'
-                  ? 'o'
-                  : 'x'
-                "
+                    s.value === 'tolearn'
+                      ? '.'
+                      : s.value === 'learning'
+                      ? 'o'
+                      : 'x'
+                  "
+                  class="relative"
+                  style="bottom: 1px"
                 ></span>
               </span>
             </template>
