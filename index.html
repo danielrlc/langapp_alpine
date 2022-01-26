@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Langapp</title>
     <link href="tailwind.min.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
     <script defer src="alpine.min.js"></script>
   </head>
 
@@ -128,6 +129,9 @@
           `Grillaamme ulkona koko illan.`,
           `En halua enää viettää iltoja yksin kotona.`,
           `Miksi minun aina täytyy tehdä kaikki kotityöt yksin?`,
+        ],
+
+        [
           `Mitä tekisit, jos olisit kaupan kassalla ja huomaisit, että sinulla ei ole rahaa mukana?`,
           `Mitä tekisit, jos löytäisit 100 euroa kadulta?`,
           `Mitä tekisit, jos näkisit, että joku varastaa suklaapatukan kaupasta?`,
@@ -142,6 +146,51 @@
           `Jos lähikauppa aukeaisi jo seitsemältä, kävisin kaupassa ennen töihin menemistä.`,
           `Ystäväni tapaisivat sinut mielellään, jos vain pääsisit tulemaan mukaan.`,
           `Lähtisittekö ulos, jos ei sataisi?`,
+          `Olinpa hölmö, kun jätin uimapuvun kotiin!`,
+          `Nyt voisin mennä uimaan, jos olisin ottanut uimapuvun mukaan.`,
+          `Tiedän, että asut kaukana.`,
+          `Mutta jos asuisit lähempänä, kävisitkö sinä pyörällä töissä?`,
+          `Eilen minä en olisi uskonut, että Carlos menisi uimaan avantoon!`,
+          `Mutta siellä hän nyt ui!`,
+          `Voi, oletko sinä laittanut meille ruokaa?`,
+          `Sinun ei olisi tarvinnut tehdä iltapalaa, koska söimme matkalla eväät autossa!`,
+          `Suomalainen voitti 400 metrin juoksun.`,
+          `Hän ei olisi voittanut kilpailua, jos toinen juoksija ei olisi kaatunut.`,
+          `Minä pidän Suomen talvesta.`,
+          `En haluaisi asua etelässä.`,
+          `Jos te tulisitte ensi kesänä käymään meillä, me voisimme tehdä veneretken saaristoon yhdessä.`,
+          `Olin viime viikolla pitkästä aikaa jumpassa.`,
+          `Vaihdoin jumppavaatteet päälle jo kotona, koska pukuhuoneessa on aina niin ahdasta.`,
+          `Jätin kuitenkin ulkovaatteet pukuhuoneen naulakkoon.`,
+          `Kun jumppatunti loppui, jäin vielä hetkeksi juttelemaan työkaverini kanssa, joka myös oli ollut samassa jumpassa.`,
+          `Kun menin pukuhuoneeseen kaikki muut olivat jo lähteneet.`,
+          `Huomasin pian, ettei minun takkini enää ollut naulakossa.`,
+          `Etsin takkiani kaikkialta, mutta en löytänyt sitä mistään.`,
+          `Mietin pitkään, mitä minun pitäisi tehdä.`,
+          `Ulkona oli pakkasta, enkä voinut lähteä kotiin ilman takkia.`,
+          `Sitten tein päätöksen: Otin naulakosta jonkun toisen takin, puin sen päälleni ja lähdin kotiin.`,
+          `Ajattelin palauttaa takin seuraavana päivänä, mutta koska lähdin työmatkalle, se unohtui.`,
+          `Nyt en enää uskalla mennä jumppatunnille.`,
+          `Tässä leivässä ei ole suolaa.`,
+          `Se on suolaton leipä.`,
+          `Henkilö, jolla ei ole rahaa, on rahaton.`,
+          `Kirje, jossa ei ole osoitetta, on osoitteeton.`,
+          `Tässä pihvissä ei ole makua.`,
+          `Se on ihan mauton.`,
+          `Henkilö, jolla ei ole perhettä, on perheetön.`,
+          `Koepaperi, jossa ei ole virheitä, on virheetön.`,
+          `Paita, jossa on ruutuja, on ruudullinen.`,
+          `Aikuinen, joka käyttäytyy kuin lapsi, on lapsellinen.`,
+          `Asia, joka on pakko tehdä, on pakollinen.`,
+        ],
+
+        [
+          // `Asiat, joilla on kiire, ovat kiireellisiä.`,
+          // `Villasukat, joissa on raitoja, ovat raidallisia.`,
+          // `Laske ympyrän halkaisijan pituus, kun sen säde on 9 cm.`,
+          // `Halkaisija kulkee ympyrän keskipisteen P kautta.`,
+          // `Halkaisijan pituus on kaksi kertaa säteen pituus.`,
+          // `Laske ympyrän säteen pituus, kun sen halkaisija on 16 cm.`,
         ],
       ],
 
@@ -250,6 +299,9 @@
           `We are grilling outside all evening.`,
           `I no longer want to spend evenings alone at home.`,
           `Why do I always have to do all the housework alone?`,
+        ],
+
+        [
           `What would you do if you were at the checkout and realised you didn't have any money on you?`,
           `What would you do if you found 100 euros on the street?`,
           `What would you do if you saw someone steal a bar of chocolate from a store?`,
@@ -264,14 +316,103 @@
           `If the convenience store opened at seven, I would go to the store before going to work.`,
           `My friends would love to meet you if you would just come along.`,
           `Would you go out if it wasn't raining?`,
+          `What a fool I've been, leaving my swimsuit at home!`,
+          `I could go swimming now, if I had brought a swimsuit with me.`,
+          `I know you live far away.`,
+          `But if you lived closer, would you go to work by bike?`,
+          `Yesterday I would not have thought Carlos would go winter swimming!`,
+          `But there he is swimming now!`,
+          `Oh, have you made us some food?`,
+          `You didn't need to make dinner, because we ate lunch in the car on the way!`,
+          `The Finn won the 400-meter run.`,
+          `He wouldn’t have won the race if the other runner hadn’t crashed.`,
+          `I like the Finnish winter.`,
+          `I wouldn't want to live in the south.`,
+          `If you came to visit us next summer, we could take a boat trip to the archipelago together.`,
+          `I was at the gym for a long time last week.`,
+          `I changed my gym clothes already at home because the locker room is always so cramped.`,
+          `However, I left my outdoor clothes in the locker room of the locker room.`,
+          `When the gym class was over, I stayed for a while to chat with my coworker, who had also been at the same gym.`,
+          `When I went to the locker room everyone else had already left.`,
+          `I soon noticed that my jacket was no longer on its hanger.`,
+          `I searched for my jacket everywhere, but I couldn’t find it anywhere.`,
+          `I wondered for a long time what I should do.`,
+          `It was frosty outside and I couldn’t go home without a jacket.`,
+          `Then I made the decision: I took someone else’s coat from the hanger, put it on, and left for home.`,
+          `I thought about returning the jacket the next day, but since I went on a business trip, it got forgotten.`,
+          `Now I no longer dare to go to the gym class.`,
+          `There is no salt in this bread.`,
+          `It is unsalted bread.`,
+          `A person who has no money is penniless.`,
+          `A letter without an address is unaddressed.`,
+          `There is no taste in this steak.`,
+          `It's just tasteless.`,
+          `A person who does not have a family is family-less.`,
+          `A test paper with no mistakes is flawless.`,
+          `A shirt with squares is plaid.`,
+          `An adult who behaves like a child is childish.`,
+          `Something that has to be done is mandatory.`,
+        ],
+
+        [
+          // `Things that are in a hurry are urgent.`,
+          // `Wool socks with stripes are striped.`,
+          // `Calculate the length of the diameter of the circle when its radius is 9 cm.`,
+          // `The diameter passes through the center P of the circle.`,
+          // `The length of the diameter is twice the length of the beam.`,
+          // `Calculate the length of the radius of a circle when its diameter is 16 cm. `,
         ],
       ],
+
+      menuIsShowing: true,
+      sentenceIsShowing: false,
+      tipsAreShowing: false,
+      shortcutsAreShowing: false,
+
+      toggleMenu: function() {
+        if (this.menuIsShowing) {
+          this.hideMenu()
+        } else {
+          this.showMenu()
+        }
+      },
+
+      hideMenu: function() {
+        this.showSentence()
+      },
+
+      showMenu: function() {
+        this.menuIsShowing = true;
+        this.sentenceIsShowing = false;
+        this.tipsAreShowing = false;
+        this.shortcutsAreShowing = false;
+      },
+
+      showSentence: function() {
+        this.menuIsShowing = false;
+        this.sentenceIsShowing = true;
+        this.tipsAreShowing = false;
+        this.shortcutsAreShowing = false;
+      },
+
+      showTips: function() {
+        this.menuIsShowing = false;
+        this.sentenceIsShowing = false;
+        this.tipsAreShowing = true;
+        this.shortcutsAreShowing = false;
+      },
+
+      showShortcuts: function() {
+        this.menuIsShowing = false;
+        this.sentenceIsShowing = false;
+        this.tipsAreShowing = false;
+        this.shortcutsAreShowing = true;
+      },
 
       // #mark - alpine state
       get blanks() {
         return this.finSentences[this.sentenceSetI][this.sentenceI].split(' ')
-          .map(word => word.split('')
-          .map(letter => '_').join(''))
+          .map(word => '_____')
       },
 
       get hints() {
@@ -296,7 +437,7 @@
         return this.finSentences[this.sentenceSetI].length
       },
 
-      sentenceSetI: 1,
+      sentenceSetI: 2,
       sentenceI: 0,
       wordI: 0,
       wordStatusRegister: [],
@@ -434,37 +575,20 @@
       },
     }"
   >
+    <!-- #mark - Main grid for whole app -->
     <div class="flex flex-col h-full">
-      <!-- ................................................... -->
-      <!-- #mark - Top bar -->
-      <!-- ................................................... -->
+      <div class="flex-grow overflow-auto">
+        <!-- Top bar -->
+        <div
+          class="flex justify-between py-1 bg-blue-200"
+          style="padding-left: 4vw; padding-right: 4vw"
+        >
+          <h1>Langapp</h1>
+          <button class="text-xs underline" x-text="menuIsShowing ? 'Hide menu' : 'Show menu'" @click="toggleMenu"></button>
+        </div>
 
-      <div
-        class="grid mb-6 px-4 py-1 bg-blue-200 gap-4"
-        style="grid-template-columns: 1fr auto"
-      >
-        <h1>Langapp</h1>
-        <button
-          x-text="
-            showHelpStatus == 'none'
-            ? 'Show instructions'
-            : showHelpStatus == 'instructionsShowing'
-            ? 'Show shortcuts'
-            : 'Hide shortcuts'
-          "
-          class="underline text-xs"
-          @click="
-            showHelpStatus == 'none'
-            ? showHelpStatus = 'instructionsShowing'
-            : showHelpStatus == 'instructionsShowing'
-            ? showHelpStatus = 'shortcutsShowing'
-            : showHelpStatus = 'none'
-          "
-        ></button>
-      </div>
-
-      <!-- Progress percentage indicator -->
-      <!-- <div
+        <!-- Progress percentage indicator -->
+        <!-- <div
         class="ml-auto text-center rounded-md mx-2 px-3 py-1"
         :class="
                 progress < 10
@@ -492,134 +616,93 @@
         <span>%</span>
       </div> -->
 
-      <!-- ................................................... -->
-      <!-- #mark - Main section 1: Sentences and optional instructions -->
-      <!-- ................................................... -->
-
-      <div
-        class="mx-auto flex-grow overflow-auto"
-        :class="(showHelpStatus == 'instructionsShowing' || showHelpStatus == 'shortcutsShowing') && 'grid gap-8 lg:gap-20'"
-        style="grid-template-columns: 1fr auto; width: min(120rem, 92vw)"
-      >
-        <!-- ................................................... -->
-        <!-- Sentence in English and Finnish -->
-        <!-- ................................................... -->
-
-        <div class="lg:text-4xl xl:text-5xl">
-          <!-- ................................................... -->
-          <!-- English sentence -->
-          <!-- ................................................... -->
-
-          <p
-            x-text="engSentences[sentenceSetI][sentenceI]"
-            class="mb-5 leading-5"
-          ></p>
-          <hr class="mb-4" />
-
-          <!-- ................................................... -->
-          <!-- Finnish sentence -->
-          <!-- ................................................... -->
-
-          <div class="font-mono leading-8 mb-6">
-            <template x-for="(word, i) in words">
-              <span @click="toggleWord(i)">
-                <span
-                  x-show="!wordStatusRegister[sentenceI][i] && !hintsAreShown"
-                  x-text="blanks[i]"
-                  class="cursor-pointer rounded-lg text-gray-600 py-1 bg-red-100 hover:bg-red-200"
-                  :class="i === wordI && 'border-b-2 border-blue-300'"
-                ></span>
-                <span
-                  x-show="!wordStatusRegister[sentenceI][i] && hintsAreShown"
-                  x-text="hints[i]"
-                  class="cursor-pointer rounded-md text-gray-600 py-1 bg-red-100 hover:bg-red-200"
-                  :class="i === wordI && 'border-b-2 border-blue-300'"
-                  :class="i === wordI && 'border-b-2 border-blue-300'"
-                ></span>
-                <span
-                  x-show="wordStatusRegister[sentenceI][i]"
-                  x-text="word"
-                  class="cursor-pointer py-1 hover:bg-gray-200 rounded-lg"
-                  :class="i === wordI && 'border-b-2 border-blue-300'"
-                ></span>
-              </span>
-            </template>
-          </div>
+        <!-- Menu -->
+        <div x-show="menuIsShowing" class="px-4 py-6 underline leading-loose">
+          <ul>
+            <li class="cursor-pointer" @click="showTips">Show instructions and learning tips</li>
+            <li class="cursor-pointer" @click="showShortcuts">Show keyboard shortcuts</li>
+          </ul>
         </div>
 
         <!-- ................................................... -->
-        <!-- Instructions section -->
+        <!-- #mark - Main section 1: Sentences and optional instructions -->
         <!-- ................................................... -->
 
-        <div x-show="showHelpStatus == 'instructionsShowing'" class="max-w-md">
-          <h2 class="font-bold text-xl mb-4">Instructions</h2>
-          <p class="mb-4">
-            Translate the given English sentence into Finnish in your head.
-            After translating a word, click on the blank
-            <span class="bg-red-100 py-1 mx-1">______</span> to see if you were
-            correct.
-          </p>
-          <p class="mb-4">
-            If you get a word wrong, click on it again to hide it and try again
-            later.
-          </p>
-          <p class="mb-4">
-            Click on
-            <span class="px-2 py-1 mx-1 border-2 rounded-md">Show all</span>
-            to show all the words. Click again to hide.
-          </p>
-          <p class="mb-4">
-            Click on
-            <span class="px-2 py-1 mx-1 border-2 rounded-md">Show hints</span>
-            to turn hints on. A hint is the first letter of the word and its
-            length. Click again to hide.
-          </p>
-          <p class="mb-4">
-            Do you want to repeat this sentence later? If so, leave some or all
-            the words hidden and come back to it later. If not, leave all the
-            words showing.
-          </p>
-          <p class="mb-4">
-            Click on
-            <span class="px-2 py-1 mx-1 border-2 rounded-md">-></span>
-            to go to the next sentence, or jump around between sentences by
-            clicking on the sentence numbers like
-            <span
-              class="bg-red-200 w-7 py-1 mx-1 inline-block text-center rounded text-sm"
-              >1</span
-            >
-            <span
-              class="bg-red-200 w-7 py-1 mx-1 inline-block text-center rounded text-sm"
-              >2</span
-            >
-            <span
-              class="bg-red-200 w-7 py-1 mx-1 inline-block text-center rounded text-sm"
-              >3</span
-            >
-            below.
-          </p>
-
-          <p class="mb-4">
-            Your progress on each sentence is tracked below. Completed sentences
-            turn green, and uncompleted sentences are red (not learnt) or yellow
-            (half learnt).
-          </p>
-        </div>
-
-        <div x-show="showHelpStatus == 'shortcutsShowing'" class="max-w-md">
-          <h2 class="mb-3 font-bold text-xl">Shortcuts</h2>
+        <div
+          class="mx-auto"
+          style="width: min(30rem, 92vw)"
+        >
+          <!-- Sentence in English and Finnish -->
           <div
-            class="mb-4 grid max-w-32"
-            style="grid-template-columns: 2rem 1fr"
+            x-show="sentenceIsShowing"
+            class="py-5"
           >
-            <span>&#8593;</span><span>Toggle word</span> <span>&#8595;</span
-            ><span>Show three words</span> <span>&#8592;</span
-            ><span>Go to previous word</span> <span>&#8594;</span
-            ><span>Go to next word</span> <span>s</span
-            ><span>Show all words</span> <span>h</span
-            ><span>Toggle hints</span> <span>z</span
-            ><span>Go to previous sentence</span> <span>x</span
-            ><span>Go to next sentence</span>
+            <!-- ................................................... -->
+            <!-- English sentence -->
+            <!-- ................................................... -->
+
+            <p
+              x-text="engSentences[sentenceSetI][sentenceI]"
+              class="mb-5 leading-tight"
+            ></p>
+            <hr class="mb-4" />
+
+            <!-- ................................................... -->
+            <!-- Finnish sentence -->
+            <!-- ................................................... -->
+
+            <div class="font-mono leading-loose">
+              <template x-for="(word, i) in words">
+                <span @click="toggleWord(i)">
+                  <span
+                    x-show="!wordStatusRegister[sentenceI][i] && !hintsAreShown"
+                    x-text="blanks[i]"
+                    class="cursor-pointer rounded-lg text-gray-600 py-1 bg-red-100 hover:bg-red-200"
+                    :class="i === wordI && 'border-b-2 border-blue-300'"
+                  ></span>
+                  <span
+                    x-show="!wordStatusRegister[sentenceI][i] && hintsAreShown"
+                    x-text="hints[i]"
+                    class="cursor-pointer rounded-md text-gray-600 py-1 bg-red-100 hover:bg-red-200"
+                    :class="i === wordI && 'border-b-2 border-blue-300'"
+                    :class="i === wordI && 'border-b-2 border-blue-300'"
+                  ></span>
+                  <span
+                    x-show="wordStatusRegister[sentenceI][i]"
+                    x-text="word"
+                    class="cursor-pointer py-1 hover:bg-gray-200 rounded-lg"
+                    :class="i === wordI && 'border-b-2 border-blue-300'"
+                  ></span>
+                </span>
+              </template>
+            </div>
+          </div>
+
+          <!-- Instructions (coming soon) -->
+          <div
+            x-show="tipsAreShowing"
+            class="max-w-md"
+          >
+            <h2 class="my-4 font-bold">Instructions video</h2>
+            <p>(coming soon)</p>
+          </div>
+
+          <!-- Keyboard shortcuts -->
+          <div x-show="shortcutsAreShowing" class="max-w-md">
+            <h2 class="my-4 font-bold">Keyboard shortcuts</h2>
+            <div
+              class="mb-4 grid max-w-32"
+              style="grid-template-columns: 2rem 1fr"
+            >
+              <span>&#8593;</span><span>Toggle word</span> <span>&#8595;</span
+              ><span>Show three words</span> <span>&#8592;</span
+              ><span>Go to previous word</span> <span>&#8594;</span
+              ><span>Go to next word</span> <span>s</span
+              ><span>Show all words</span> <span>h</span
+              ><span>Toggle hints</span> <span>z</span
+              ><span>Go to previous sentence</span> <span>x</span
+              ><span>Go to next sentence</span>
+            </div>
           </div>
         </div>
       </div>
@@ -628,25 +711,25 @@
       <!-- #mark Main section 2: Control buttons, sentence and progress info -->
       <!-- ................................................... -->
 
-      <div class="mx-auto" style="width: min(120rem, 92vw)">
+      <div class="mx-auto" style="width: min(30rem, 92vw)">
         <!-- Sentence buttons section -->
         <div
-          class="text-xs lg:text-lg text-center mb-0 lg:mb-6 lg:grid lg:justify-between lg:items-center"
+          class="text-xs text-center mb-0"
         >
           <!-- Current sentence control buttons -->
-          <div class="mb-2">
+          <div class="py-2">
             <!-- Toggle hints button -->
             <button
               x-text="hintsAreShown ? 'No hints' : 'Hints'"
               :class="allWordsAreShown ? 'pointer-events-none opacity-25' : ''"
-              class="px-3 lg:px-4 py-1 mx-1 border-2 rounded-md border-gray-300 hover:border-gray-400"
+              class="px-3 py-1 mx-1 border-2 rounded-md border-gray-300 hover:border-gray-400"
               @click="toggleHints()"
             ></button>
 
             <!-- Show three button -->
             <button
               :class="allWordsAreShown ? 'pointer-events-none opacity-25' : ''"
-              class="px-3 lg:px-4 py-1 mx-1 border-2 rounded-md border-gray-300 hover:border-gray-400"
+              class="px-3 py-1 mx-1 border-2 rounded-md border-gray-300 hover:border-gray-400"
               @click="showNextThreeWords()"
             >
               Show three
@@ -655,7 +738,7 @@
             <!-- Toggle all button -->
             <button
               x-text="allWordsAreHidden ? 'Show all' : 'Hide all'"
-              class="px-3 lg:px-4 py-1 mx-1 lg:ml-0 border-2 rounded-md border-gray-300 hover:border-gray-400"
+              class="px-3 py-1 mx-1 border-2 rounded-md border-gray-300 hover:border-gray-400"
               @click="toggleSentence()"
             ></button>
           </div>
@@ -717,7 +800,7 @@
         </div>
 
         <!-- #mark - Progress marks and sentence links -->
-        <div style="width: min(120rem, 92vw)">
+        <div style="width: min(30rem, 92vw)">
           <div
             class="grid gap-1 mb-2"
             style="grid-template-columns: repeat(10, 1fr)"
