@@ -364,8 +364,8 @@
         ],
       ],
 
-      menuIsShowing: true,
-      sentenceIsShowing: false,
+      menuIsShowing: false,
+      sentenceIsShowing: true,
       tipsAreShowing: false,
       shortcutsAreShowing: false,
 
@@ -506,6 +506,10 @@
         return register
       },
 
+      get sentenceStatus() {
+        return this.sentenceStatusRegister[this.sentenceI].value
+      },
+
       get tenSentenceRegister() {
         startI = this.sentenceI - (this.sentenceI % 10)
         endI = startI + 9
@@ -584,43 +588,22 @@
           style="padding-left: 4vw; padding-right: 4vw"
         >
           <h1>Langapp</h1>
-          <button class="text-xs underline" x-text="menuIsShowing ? 'Hide menu' : 'Show menu'" @click="toggleMenu"></button>
+          <button
+            class="text-xs underline"
+            x-text="menuIsShowing ? 'Hide menu' : 'Show menu'"
+            @click="toggleMenu"
+          ></button>
         </div>
-
-        <!-- Progress percentage indicator -->
-        <!-- <div
-        class="ml-auto text-center rounded-md mx-2 px-3 py-1"
-        :class="
-                progress < 10
-                  ? 'bg-red-300'
-                  : progress < 20
-                  ? 'bg-red-200'
-                  : progress < 30
-                  ? 'bg-red-100'
-                  : progress < 40
-                  ? 'bg-yellow-100'
-                  : progress < 50
-                  ? 'bg-yellow-200'
-                  : progress < 60
-                  ? 'bg-yellow-300'
-                  : progress < 70
-                  ? 'bg-yellow-400'
-                  : progress < 80
-                  ? 'bg-green-100'
-                  : progress < 90
-                  ? 'bg-green-200'
-                  : 'bg-green-300'
-                "
-      >
-        <span x-text="progress" class="pr-1"></span>
-        <span>%</span>
-      </div> -->
 
         <!-- Menu -->
         <div x-show="menuIsShowing" class="px-4 py-6 underline leading-loose">
           <ul>
-            <li class="cursor-pointer" @click="showTips">Show instructions and learning tips</li>
-            <li class="cursor-pointer" @click="showShortcuts">Show keyboard shortcuts</li>
+            <li class="cursor-pointer" @click="showTips">
+              Show instructions and learning tips
+            </li>
+            <li class="cursor-pointer" @click="showShortcuts">
+              Show keyboard shortcuts
+            </li>
           </ul>
         </div>
 
@@ -628,15 +611,9 @@
         <!-- #mark - Main section 1: Sentences and optional instructions -->
         <!-- ................................................... -->
 
-        <div
-          class="mx-auto"
-          style="width: min(30rem, 92vw)"
-        >
+        <div class="mx-auto" style="width: min(30rem, 92vw)">
           <!-- Sentence in English and Finnish -->
-          <div
-            x-show="sentenceIsShowing"
-            class="py-5"
-          >
+          <div x-show="sentenceIsShowing" class="py-5">
             <!-- ................................................... -->
             <!-- English sentence -->
             <!-- ................................................... -->
@@ -651,19 +628,19 @@
             <!-- Finnish sentence -->
             <!-- ................................................... -->
 
-            <div class="font-mono leading-loose">
+            <div class="text-lg font-mono leading-loose">
               <template x-for="(word, i) in words">
                 <span @click="toggleWord(i)">
                   <span
                     x-show="!wordStatusRegister[sentenceI][i] && !hintsAreShown"
                     x-text="blanks[i]"
-                    class="cursor-pointer rounded-lg text-gray-600 py-1 bg-red-100 hover:bg-red-200"
+                    class="cursor-pointer rounded-lg text-gray-600 py-1 bg-gray-200 hover:bg-gray-300"
                     :class="i === wordI && 'border-b-2 border-blue-300'"
                   ></span>
                   <span
                     x-show="!wordStatusRegister[sentenceI][i] && hintsAreShown"
                     x-text="hints[i]"
-                    class="cursor-pointer rounded-md text-gray-600 py-1 bg-red-100 hover:bg-red-200"
+                    class="cursor-pointer rounded-md text-gray-600 py-1 bg-gray-200 hover:bg-gray-300"
                     :class="i === wordI && 'border-b-2 border-blue-300'"
                     :class="i === wordI && 'border-b-2 border-blue-300'"
                   ></span>
@@ -679,10 +656,7 @@
           </div>
 
           <!-- Instructions (coming soon) -->
-          <div
-            x-show="tipsAreShowing"
-            class="max-w-md"
-          >
+          <div x-show="tipsAreShowing" class="max-w-md">
             <h2 class="my-4 font-bold">Instructions video</h2>
             <p>(coming soon)</p>
           </div>
@@ -711,96 +685,105 @@
       <!-- #mark Main section 2: Control buttons, sentence and progress info -->
       <!-- ................................................... -->
 
-      <div class="mx-auto" style="width: min(30rem, 92vw)">
+      <div class="mx-auto" style="width: min(30rem, 100%)">
         <!-- Sentence buttons section -->
-        <div
-          class="text-xs text-center mb-0"
-        >
+        <div class="text-sm text-center mb-0">
           <!-- Current sentence control buttons -->
-          <div class="py-2">
+          <div
+            class="py-2"
+            :class="
+              sentenceStatus === 'tolearn'
+                ? 'bg-red-200'
+                : sentenceStatus === 'learning'
+                ? 'bg-yellow-200'
+                : 'bg-green-200'
+              "
+          >
             <!-- Toggle hints button -->
             <button
-              x-text="hintsAreShown ? 'No hints' : 'Hints'"
-              :class="allWordsAreShown ? 'pointer-events-none opacity-25' : ''"
-              class="px-3 py-1 mx-1 border-2 rounded-md border-gray-300 hover:border-gray-400"
               @click="toggleHints()"
-            ></button>
+              :class="allWordsAreShown ? 'pointer-events-none opacity-25' : ''"
+              class="h-9 w-10 mr-1 bg-white rounded-md"
+            >
+              Hints
+            </button>
 
             <!-- Show three button -->
             <button
-              :class="allWordsAreShown ? 'pointer-events-none opacity-25' : ''"
-              class="px-3 py-1 mx-1 border-2 rounded-md border-gray-300 hover:border-gray-400"
               @click="showNextThreeWords()"
+              :class="allWordsAreShown ? 'pointer-events-none opacity-25' : ''"
+              class="h-9 w-10 mr-1 bg-white rounded-md"
             >
-              Show three
+              +3
             </button>
 
             <!-- Toggle all button -->
             <button
-              x-text="allWordsAreHidden ? 'Show all' : 'Hide all'"
-              class="px-3 py-1 mx-1 border-2 rounded-md border-gray-300 hover:border-gray-400"
               @click="toggleSentence()"
-            ></button>
-          </div>
-
-          <!-- #mark - Sentence navigation buttons and info -->
-          <div class="mb-2">
-            <!-- Go back 10 sentences button -->
-            <button
-              :class="sentenceI === 0 && 'pointer-events-none opacity-25'"
-              class="px-3 py-1 mr-1 border-2 rounded-md border-gray-300 hover:border-gray-400"
-              @click="changeSentence('back 10')"
+              class="h-9 w-10 mr-5 bg-white rounded-md"
             >
-              <<
+              All
             </button>
+
+            <!-- #mark - Sentence navigation buttons and info -->
 
             <!-- Go to previous sentence button -->
             <button
-              :class="sentenceI === 0 && 'pointer-events-none opacity-25'"
-              class="px-3 py-1 mx-1 border-2 rounded-md border-gray-300 hover:border-gray-400"
               @click="changeSentence('back 1')"
+              :class="sentenceI === 0 && 'pointer-events-none opacity-25'"
+              class="h-9 w-10 mr-1 bg-white rounded-md"
             >
-              <
+              &#8592;
             </button>
 
             <!-- Sentence info, eg 1/93 -->
-            <div
-              class="inline text-center rounded-md mx-2 px-3 py-1"
-              :class="
-                sentenceStatusRegister[sentenceI].value === 'tolearn'
-                  ? 'bg-red-300'
-                  : sentenceStatusRegister[sentenceI].value === 'learning'
-                  ? 'bg-yellow-300'
-                  : 'bg-green-300'
-                "
-            >
-              <span x-text="sentenceI + 1"></span>
-              <span>/</span>
-              <span x-text="sentenceCount"></span>
-            </div>
+            <button
+              x-text="sentenceI + 1 + '/' + sentenceCount"
+              class="h-9 w-10 mr-1 rounded-md bg-white"
+            ></button>
 
             <!-- Go to next sentence button -->
             <button
-              :class="sentenceI === finSentences[sentenceSetI].length - 1 && 'pointer-events-none opacity-25'"
-              class="px-3 py-1 mx-1 border-2 rounded-md border-gray-300 hover:border-gray-400"
               @click="changeSentence('forward 1')"
+              :class="sentenceI === finSentences[sentenceSetI].length - 1 && 'pointer-events-none opacity-25'"
+              class="h-9 w-10 bg-white rounded-md"
             >
-              >
+              &#8594;
             </button>
 
-            <!-- Go forward 10 sentences button -->
-            <button
-              :class="sentenceI === finSentences[sentenceSetI].length - 1 && 'pointer-events-none opacity-25'"
-              class="px-3 py-1 ml-1 border-2 rounded-md border-gray-300 hover:border-gray-400"
-              @click="changeSentence('forward 10')"
+            <!-- Progress percentage indicator -->
+            <!-- <div
+              style="position: relative; top: 2px;"
+              x-text="progress + '%'"
+              class="inline text-base text-center rounded-md"
+              :class="
+                progress < 10
+                  ? 'bg-red-300'
+                  : progress < 20
+                  ? 'bg-red-200'
+                  : progress < 30
+                  ? 'bg-red-100'
+                  : progress < 40
+                  ? 'bg-yellow-100'
+                  : progress < 50
+                  ? 'bg-yellow-200'
+                  : progress < 60
+                  ? 'bg-yellow-300'
+                  : progress < 70
+                  ? 'bg-yellow-400'
+                  : progress < 80
+                  ? 'bg-green-100'
+                  : progress < 90
+                  ? 'bg-green-200'
+                  : 'bg-green-300'
+                "
             >
-              >>
-            </button>
+            </div> -->
           </div>
         </div>
 
         <!-- #mark - Progress marks and sentence links -->
-        <div style="width: min(30rem, 92vw)">
+        <!-- <div style="width: min(30rem, 92vw)">
           <div
             class="grid gap-1 mb-2"
             style="grid-template-columns: repeat(10, 1fr)"
@@ -837,7 +820,7 @@
               </span>
             </template>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </body>

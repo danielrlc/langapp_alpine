@@ -1,7 +1,19 @@
-/* Why 80% + 1vw? Because then we get:
-320px width = 16/0.8 + 320/100 = 16px (default in browsers)
-And then the base font size increases gradually on wider screens to take
-advantage of the extra space. */
-html {
-  font-size: min(calc(80% + 1vw), 200%);
+/* Increase size proportionally with screen width between 320px-400px
+to maximise use of screen width and ensure consistent layout on different
+mobile devices */
+@media (max-width: 400px) {
+  html {
+    font-size: 5vw;
+  }
+}
+
+/* Slow the rate of increase on larger screens */
+@media (min-width: 401px) {
+  html {
+    font-size: min(calc(100% + 1vw), 200%);
+  }
+}
+
+.text-2xs {
+  font-size: 0.675rem;
 }
