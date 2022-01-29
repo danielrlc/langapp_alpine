@@ -365,47 +365,44 @@
       ],
 
       menuIsShowing: false,
-      sentenceIsShowing: true,
+      flashcardIsShowing: true,
       tipsAreShowing: false,
       shortcutsAreShowing: false,
+      progressMapIsShowing: false,
 
       toggleMenu: function() {
         if (this.menuIsShowing) {
-          this.hideMenu()
+          this.showFlashcard()
         } else {
           this.showMenu()
         }
       },
 
-      hideMenu: function() {
-        this.showSentence()
+      hideAllScreens: function() {
+        this.flashcardIsShowing = false;
+        this.progressMapIsShowing = false;
+        this.menuIsShowing = false;
+        this.tipsAreShowing = false;
+        this.shortcutsAreShowing = false;
+      },
+
+      showFlashcard: function() {
+        this.hideAllScreens()
+        this.flashcardIsShowing = true;
       },
 
       showMenu: function() {
+        this.hideAllScreens()
         this.menuIsShowing = true;
-        this.sentenceIsShowing = false;
-        this.tipsAreShowing = false;
-        this.shortcutsAreShowing = false;
-      },
-
-      showSentence: function() {
-        this.menuIsShowing = false;
-        this.sentenceIsShowing = true;
-        this.tipsAreShowing = false;
-        this.shortcutsAreShowing = false;
       },
 
       showTips: function() {
-        this.menuIsShowing = false;
-        this.sentenceIsShowing = false;
+        this.hideAllScreens()
         this.tipsAreShowing = true;
-        this.shortcutsAreShowing = false;
       },
 
       showShortcuts: function() {
-        this.menuIsShowing = false;
-        this.sentenceIsShowing = false;
-        this.tipsAreShowing = false;
+        this.hideAllScreens()
         this.shortcutsAreShowing = true;
       },
 
@@ -584,15 +581,15 @@
       <div class="flex-grow overflow-auto">
         <!-- Top bar -->
         <div
-          class="flex justify-between py-1 bg-blue-200"
+          class="flex justify-center py-1 bg-blue-200"
           style="padding-left: 4vw; padding-right: 4vw"
         >
-          <h1>Langapp</h1>
-          <button
+          <h1>Langapp (real name TBD)</h1>
+          <!-- <button
             class="text-xs underline"
             x-text="menuIsShowing ? 'Hide menu' : 'Show menu'"
             @click="toggleMenu"
-          ></button>
+          ></button> -->
         </div>
 
         <!-- Menu -->
@@ -613,7 +610,7 @@
 
         <div class="mx-auto" style="width: min(30rem, 92vw)">
           <!-- Sentence in English and Finnish -->
-          <div x-show="sentenceIsShowing" class="py-5">
+          <div x-show="flashcardIsShowing" class="py-5">
             <!-- ................................................... -->
             <!-- English sentence -->
             <!-- ................................................... -->
@@ -656,13 +653,13 @@
           </div>
 
           <!-- Instructions (coming soon) -->
-          <div x-show="tipsAreShowing" class="max-w-md">
+          <div x-show="tipsAreShowing" class="max-w-md text-sm">
             <h2 class="my-4 font-bold">Instructions video</h2>
             <p>(coming soon)</p>
           </div>
 
           <!-- Keyboard shortcuts -->
-          <div x-show="shortcutsAreShowing" class="max-w-md">
+          <div x-show="shortcutsAreShowing" class="max-w-md text-sm">
             <h2 class="my-4 font-bold">Keyboard shortcuts</h2>
             <div
               class="mb-4 grid max-w-32"
@@ -682,15 +679,62 @@
       </div>
 
       <!-- ................................................... -->
-      <!-- #mark Main section 2: Control buttons, sentence and progress info -->
+      <!-- Progress map -->
       <!-- ................................................... -->
 
-      <div class="mx-auto" style="width: min(30rem, 100%)">
+      <div x-show="progressMapIsShowing">
+        <div
+          class="grid gap-x-1 gap-y-3 py-4 mx-2 justify-items-center"
+          style="grid-template-columns: repeat(10, 1fr)"
+        >
+          <template x-for="s in sentenceStatusRegister">
+            <span
+              @click="sentenceI = s.index"
+              class="text-sm text-center rounded-md cursor-pointer flex h-6 w-6 items-center justify-center"
+              :class="
+                s.value === 'tolearn' && s.index === sentenceI
+                  ? 'bg-red-800 font-bold text-white'
+                  : s.value === 'tolearn'
+                  ? 'bg-red-100 hover:bg-red-300'
+                  : s.value === 'learning' && s.index === sentenceI
+                  ? 'bg-yellow-600 font-bold text-white'
+                  : s.value === 'learning'
+                  ? 'bg-yellow-100 hover:bg-yellow-300'
+                  : s.value === 'learnt' && s.index === sentenceI
+                  ? 'bg-green-800 font-bold text-white'
+                  : 'bg-green-100 hover:bg-green-300'
+                "
+            >
+              <span
+                x-text="
+                    s.value === 'tolearn'
+                      ? '.'
+                      : s.value === 'learning'
+                      ? 'o'
+                      : 'x'
+                  "
+                class="relative"
+                style="bottom: 1px"
+              ></span>
+            </span>
+          </template>
+        </div>
+      </div>
+
+      <!-- ................................................... -->
+      <!-- Control pad -->
+      <!-- ................................................... -->
+
+      <div
+        x-show="flashcardIsShowing || progressMapIsShowing"
+        class="mx-auto"
+        style="width: min(30rem, 100%)"
+      >
         <!-- Sentence buttons section -->
         <div class="text-sm text-center mb-0">
           <!-- Current sentence control buttons -->
           <div
-            class="py-2"
+            class="py-2 grid grid-cols-7 gap-2 justify-items-center px-2"
             :class="
               sentenceStatus === 'tolearn'
                 ? 'bg-red-200'
@@ -703,7 +747,7 @@
             <button
               @click="toggleHints()"
               :class="allWordsAreShown ? 'pointer-events-none opacity-25' : ''"
-              class="h-9 w-10 mr-1 bg-white rounded-md"
+              class="h-9 w-9 bg-white rounded-md"
             >
               Hints
             </button>
@@ -712,7 +756,7 @@
             <button
               @click="showNextThreeWords()"
               :class="allWordsAreShown ? 'pointer-events-none opacity-25' : ''"
-              class="h-9 w-10 mr-1 bg-white rounded-md"
+              class="h-9 w-9 bg-white rounded-md"
             >
               +3
             </button>
@@ -720,10 +764,19 @@
             <!-- Toggle all button -->
             <button
               @click="toggleSentence()"
-              class="h-9 w-10 mr-5 bg-white rounded-md"
+              class="h-9 w-9 bg-white rounded-md"
             >
               All
             </button>
+
+            <!-- Navigation and progress information -->
+            <div class="text-xs place-self-center">
+              <span
+                x-text="sentenceI + 1 + '/' + sentenceCount"
+                class="inline-block"
+              ></span>
+              <span x-text="progress + '%'" class="inline-block"></span>
+            </div>
 
             <!-- #mark - Sentence navigation buttons and info -->
 
@@ -731,24 +784,27 @@
             <button
               @click="changeSentence('back 1')"
               :class="sentenceI === 0 && 'pointer-events-none opacity-25'"
-              class="h-9 w-10 mr-1 bg-white rounded-md"
+              class="h-9 w-9 bg-white rounded-md"
             >
               &#8592;
             </button>
-
-            <!-- Sentence info, eg 1/93 -->
-            <button
-              x-text="sentenceI + 1 + '/' + sentenceCount"
-              class="h-9 w-10 mr-1 rounded-md bg-white"
-            ></button>
 
             <!-- Go to next sentence button -->
             <button
               @click="changeSentence('forward 1')"
               :class="sentenceI === finSentences[sentenceSetI].length - 1 && 'pointer-events-none opacity-25'"
-              class="h-9 w-10 bg-white rounded-md"
+              class="h-9 w-9 bg-white rounded-md"
             >
               &#8594;
+            </button>
+
+            <!-- Open navigation modal window -->
+            <button
+              @click="progressMapIsShowing = !progressMapIsShowing"
+              class="h-9 w-9 rounded-md bg-white"
+              :class="sentenceI % 10 == 9 && 'bg-green-200'"
+            >
+              &#8593;&#8595;
             </button>
 
             <!-- Progress percentage indicator -->
@@ -781,46 +837,6 @@
             </div> -->
           </div>
         </div>
-
-        <!-- #mark - Progress marks and sentence links -->
-        <!-- <div style="width: min(30rem, 92vw)">
-          <div
-            class="grid gap-1 mb-2"
-            style="grid-template-columns: repeat(10, 1fr)"
-          >
-            <template x-for="s in tenSentenceRegister">
-              <span
-                @click="sentenceI = s.index"
-                class="text-sm text-center rounded-md cursor-pointer flex h-6 w-6 items-center justify-center"
-                :class="
-                s.value === 'tolearn' && s.index === sentenceI
-                  ? 'bg-red-800 font-bold text-white'
-                  : s.value === 'tolearn'
-                  ? 'bg-red-100 hover:bg-red-300'
-                  : s.value === 'learning' && s.index === sentenceI
-                  ? 'bg-yellow-600 font-bold text-white'
-                  : s.value === 'learning'
-                  ? 'bg-yellow-100 hover:bg-yellow-300'
-                  : s.value === 'learnt' && s.index === sentenceI
-                  ? 'bg-green-800 font-bold text-white'
-                  : 'bg-green-100 hover:bg-green-300'
-                "
-              >
-                <span
-                  x-text="
-                    s.value === 'tolearn'
-                      ? '.'
-                      : s.value === 'learning'
-                      ? 'o'
-                      : 'x'
-                  "
-                  class="relative"
-                  style="bottom: 1px"
-                ></span>
-              </span>
-            </template>
-          </div>
-        </div> -->
       </div>
     </div>
   </body>
