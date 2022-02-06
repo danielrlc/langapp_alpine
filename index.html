@@ -1,16 +1,25 @@
-<html>
+<!DOCTYPE html>
+
+<html lang="en" class="h-full">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Langapp</title>
-    <link href="tailwind.min.css" rel="stylesheet" />
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
     <link href="style.css" rel="stylesheet" />
-    <script defer src="alpine.min.js"></script>
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
   </head>
 
   <!-- #mark - start of app -->
   <body
+    class="h-full"
     @keydown.;.window="changeSentence('back 1')"
     @keydown.q.window="changeSentence('forward 1')"
     @keydown.o.window="toggleSentence()"
@@ -191,6 +200,8 @@
           // `Halkaisija kulkee ympyrän keskipisteen P kautta.`,
           // `Halkaisijan pituus on kaksi kertaa säteen pituus.`,
           // `Laske ympyrän säteen pituus, kun sen halkaisija on 16 cm.`,
+          // `Hei kuoro, rajoitukset poistuu huomenna ja päästään ensi maanantaina lähitreeneihin joten ei pidetä näitä yksiä zoom-treenejä (joissa puolet ajasta menee tekniikkaan) vaan siirrytään suoraan lähikuoroiluun ensi maanantaina.`,
+          // `Kaikki treeneihin klo 17.45.`
         ],
       ],
 
@@ -361,6 +372,8 @@
           // `The diameter passes through the center P of the circle.`,
           // `The length of the diameter is twice the length of the beam.`,
           // `Calculate the length of the radius of a circle when its diameter is 16 cm. `,
+          // `Hey choir, the restrictions will be removed tomorrow and we will get to the local rehearsals next Monday so we won't have these one zoom rehearsals (where half the time goes to technique) but we will go straight to the local choir next Monday.`,
+          // `All rehearsals at 5:45 p.m.`,
         ],
       ],
 

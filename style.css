@@ -13,7 +13,3 @@ mobile devices */
     font-size: min(calc(100% + 1vw), 200%);
   }
 }
-
-.text-2xs {
-  font-size: 0.675rem;
-}
